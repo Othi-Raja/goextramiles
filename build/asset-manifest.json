@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.8bae8a21.css",
+    "main.js": "/static/js/main.b2bfe4d5.js",
+    "static/js/206.da9b3f34.chunk.js": "/static/js/206.da9b3f34.chunk.js",
+    "static/media/threads.png": "/static/media/threads.787ae3cad85d253e320f.png",
+    "static/media/instagram.png": "/static/media/instagram.53505072d690c460b44c.png",
+    "static/media/social.png": "/static/media/social.ba7300db442d70384186.png",
+    "static/media/pinterest.png": "/static/media/pinterest.9fc94b64a73362f0f4e3.png",
+    "static/media/telegram.png": "/static/media/telegram.e9722f26cc228e817986.png",
+    "static/media/AppLogo_bgr.png": "/static/media/AppLogo_bgr.39d67e326bcf471cade0.png",
+    "static/media/reddit.png": "/static/media/reddit.1202d9af567c1c424a58.png",
+    "static/media/whatsapp.png": "/static/media/whatsapp.6d7dbae9f2bbda1e3c40.png",
+    "static/media/tiktok.png": "/static/media/tiktok.55988406368c12eac495.png",
+    "static/media/white_gem_logo.png": "/static/media/white_gem_logo.936b6996232434b3adf8.png",
+    "index.html": "/index.html",
+    "static/media/logo.svg": "/static/media/logo.7fb4aff66fa0242df4df229c935a1e6c.svg"
+  },
+  "entrypoints": [
+    "static/css/main.8bae8a21.css",
+    "static/js/main.b2bfe4d5.js"
+  ]
+}
