@@ -28,6 +28,14 @@ box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(20.1px);
 -webkit-backdrop-filter: blur(20.1px);
 }
+.glassbg2 {
+padding: 10px 30px 10px 20px ;
+
+  border-radius: 100px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(7.6px);
+-webkit-backdrop-filter: blur(7.6px);
+}
 .login-text{
   font-weight: 500;
 }
@@ -188,4 +196,21 @@ z-index: 9999;
   background-color: transparent;
   color: black;
   border: 1px solid black;
+}
+.googleSignIn{
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: 500;
+  border-radius: 10px;
+ 
+
+}
+.AppleSignIn{
+  background-color: rgb(255, 255, 255);
+  color: black;
+  font-weight: 500;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  padding: 8px;
 }

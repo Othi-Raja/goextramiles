@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.8bae8a21.css",
-    "main.js": "/static/js/main.b2bfe4d5.js",
+    "main.css": "/static/css/main.19f36e09.css",
+    "main.js": "/static/js/main.de8bc9ea.js",
     "static/js/206.da9b3f34.chunk.js": "/static/js/206.da9b3f34.chunk.js",
     "static/media/threads.png": "/static/media/threads.787ae3cad85d253e320f.png",
     "static/media/instagram.png": "/static/media/instagram.53505072d690c460b44c.png",
@@ -13,11 +13,12 @@
     "static/media/whatsapp.png": "/static/media/whatsapp.6d7dbae9f2bbda1e3c40.png",
     "static/media/tiktok.png": "/static/media/tiktok.55988406368c12eac495.png",
     "static/media/white_gem_logo.png": "/static/media/white_gem_logo.936b6996232434b3adf8.png",
+    "static/media/apple_icon.svg": "/static/media/apple_icon.0d629b231daf2377db085fd697b55f16.svg",
     "index.html": "/index.html",
     "static/media/logo.svg": "/static/media/logo.7fb4aff66fa0242df4df229c935a1e6c.svg"
   },
   "entrypoints": [
-    "static/css/main.8bae8a21.css",
-    "static/js/main.b2bfe4d5.js"
+    "static/css/main.19f36e09.css",
+    "static/js/main.de8bc9ea.js"
   ]
 }
