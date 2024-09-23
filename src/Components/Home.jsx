@@ -5,11 +5,15 @@ import { doc, getDoc } from 'firebase/firestore';
 import { firestoreDb } from './firebaseConfig'; // Firestore configuration
 import Nav from '../Components/Nav';
 import Admin from './admin/Admin';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css'; // Import Skeleton styles
 import { Link } from 'react-router-dom';
 import { Routes, Route, useLocation } from 'react-router-dom';
 function App() {
   const location = useLocation();
   const [Homedata, setHomeData] = useState({});
+  const [loading, setLoading] = useState(true); // Add loading state
+
   // Fetch data from Firestore
   const fetchData = async () => {
     const docRef = doc(firestoreDb, 'Home', 'HomePageData');
@@ -19,6 +23,8 @@ function App() {
     } else {
       console.error("No such document!");
     }
+    setLoading(false); // Set loading to false after data is fetched
+
   };
   useEffect(() => {
     fetchData();
@@ -31,6 +37,9 @@ function App() {
   }, [location]);
   return (
     <div className="Home" id='Home'>
+             {loading ? (
+              <Skeleton count={10} height={50}  />
+            ) : (
       <div id='main-home' style={{
         backgroundImage: `url(${Homedata.BgImg})`,
         backgroundRepeat: 'no-repeat',
@@ -63,6 +72,7 @@ function App() {
           <Route path="/Admin" element={<Admin />} />
         </Routes>
       </div>
+            )}
     </div>
   );
 }

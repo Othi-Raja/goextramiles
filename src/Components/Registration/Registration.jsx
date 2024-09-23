@@ -16,6 +16,8 @@ export default function Registration() {
     const [tableData, setTableData] = useState([]);
     const [showModal, setShowModal] = useState(false); // Show modal for editing URLs
     const [appStoreUrl, setAppStoreUrl] = useState('');
+    const [PaymentRegLink, setPaymentRegLinkUrl] = useState('');
+
     const [playStoreUrl, setPlayStoreUrl] = useState('');
     const [showAppStore, setShowAppStore] = useState(true); // Toggle AppStore URL visibility
     const [showPlayStore, setShowPlayStore] = useState(true); // Toggle PlayStore URL visibility
@@ -27,6 +29,7 @@ export default function Registration() {
             setTableData(docSnap.data().plansData || []);
             setRegData(docSnap.data());
             setAppStoreUrl(docSnap.data().appStoreUrl || '');
+            setPaymentRegLinkUrl(docSnap.data().PaymentRegLink || '');
             setPlayStoreUrl(docSnap.data().playStoreUrl || '');
             setShowAppStore(docSnap.data().showAppStore !== false); // Default to true if not present
             setShowPlayStore(docSnap.data().showPlayStore !== false); // Default to true if not present
@@ -70,7 +73,8 @@ export default function Registration() {
                 appStoreUrl,
                 playStoreUrl,
                 showAppStore,
-                showPlayStore
+                showPlayStore,
+                PaymentRegLink
             });
             console.log("Document successfully updated!");
         } catch (error) {
@@ -80,6 +84,7 @@ export default function Registration() {
     };
     const handleModalShow = () => setShowModal(true);
     const handleModalClose = () => setShowModal(false);
+    // console.log(Regdata);
     return (
         <>
             <Container fluid className="position-relative">
@@ -187,7 +192,7 @@ export default function Registration() {
                                             Add Row
                                         </Button>
                                 <Button variant="secondary" className="px-3 ms-2 btn" onClick={handleModalShow}>
-                                  Edit
+                                  Edit Apps
                                 </Button>
                                     </Col>
                                   
@@ -208,14 +213,28 @@ export default function Registration() {
                 {/* App Store and Play Store Icons */}
                 <Row className='w-100 d-flex justify-content-center pt-4'>
                     {showAppStore && (
-                        <img src={appstoreIcon} alt="AppStore" style={{ width: '150px', height: '100%' }} />
+                         
+
+                            <img   onClick={() => window.open( Regdata.appStoreUrl,'_blank')}  src={appstoreIcon} alt="AppStore" style={{ width: '150px', height: '100%' }} />
+                        
                     )}
-                    {showPlayStore && (
-                        <img src={googleplayIcon} alt="PlayStore" style={{ width: '150px' }} />
+                    {showPlayStore && ( 
+
+
+                            <img   onClick={() => window.open(Regdata.playStoreUrl,'_blank')}  src={googleplayIcon} alt="PlayStore" style={{ width: '150px' }} />
+                      
                     )}
                 </Row>
                 <Col className='pb-4 mb-4 mt-4'>
-                    <Link to="/Verification" className='float-end Feature-reg-btn btn' style={{ position: 'absolute', right: '50px' }}>REGISTER</Link>
+                    {
+                        Regdata.PaymentRegLink ? (
+                            <a href={Regdata.PaymentRegLink} target='_blank' className='float-end Feature-reg-btn btn' style={{ position: 'absolute', right: '50px' }}>REGISTER</a>
+
+                        ): (
+
+                            <Link to="/Verification" className='float-end Feature-reg-btn btn' style={{ position: 'absolute', right: '50px' }}>REGISTER</Link>
+                        )
+                    }
                 </Col>
             </Container>
             {/* Modal for Editing URLs */}
@@ -255,6 +274,15 @@ export default function Registration() {
                             label="Show PlayStore"
                             checked={showPlayStore}
                             onChange={() => setShowPlayStore(!showPlayStore)}
+                        />
+                    </Form.Group>
+                    <Modal.Title>Registration Link</Modal.Title>
+                    <Form.Group controlId="playStoreUrl" className="mt-3">
+                        <Form.Label>PlayStore URL</Form.Label>
+                        <Form.Control
+                            type="text"
+                            value={PaymentRegLink}
+                            onChange={(e) => setPaymentRegLinkUrl(e.target.value)}
                         />
                     </Form.Group>
                 </Modal.Body>
