@@ -92,8 +92,8 @@ export default function ForBusiness() {
             {loading ? (
               <Skeleton count={5} />
             ) : (
-              
-              <button className="B-Button">Sign up/Create Business account</button>
+              // onClick={()=>window.open(Businesdata.Blink,'_blank')}
+              <button className="B-Button" >Sign up/Create Business account</button>
             )}
             </Row>
             {

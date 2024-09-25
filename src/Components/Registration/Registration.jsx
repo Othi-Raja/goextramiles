@@ -228,7 +228,7 @@ export default function Registration() {
                 <Col className='pb-4 mb-4 mt-4'>
                     {
                         Regdata.PaymentRegLink ? (
-                            <a href={Regdata.PaymentRegLink} target='_blank' className='float-end Feature-reg-btn btn' style={{ position: 'absolute', right: '50px' }}>REGISTER</a>
+                            <a href={Regdata.PaymentRegLink} target='_blank' rel="noreferrer" className='float-end Feature-reg-btn btn' style={{ position: 'absolute', right: '50px' }}>REGISTER</a>
 
                         ): (
 

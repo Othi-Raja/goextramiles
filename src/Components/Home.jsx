@@ -55,6 +55,9 @@ function App() {
           <div className="main-subtitle">
             <span>{Homedata.Txt2}</span>
           </div>
+          {loading ? (
+              <Skeleton count={10} height={50}  />
+            ) : (
           <div className="mt-4" style={{ display: Homedata.RegistrationItem?.length === 0 ? 'none' : 'block' }}>
             {Homedata.RegistrationLink ? (
               <a href={Homedata.RegistrationLink} className='registor-btn'>
@@ -66,6 +69,7 @@ function App() {
               </Link>
             )}
           </div>
+            )}
         </div>
         {/* Always show the Routes */}
         <Routes>

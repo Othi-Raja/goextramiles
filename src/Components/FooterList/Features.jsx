@@ -13,13 +13,13 @@ import './footerDec.css';
 import './feature.css'
 export default function Features() {
     const navigate = useNavigate();
-  const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true); // Add loading state
     const [Featuredata, setFeatureData] = useState({});
     const [showModal, setShowModal] = useState(false);
     const [currentFeature, setCurrentFeature] = useState({ featureKey: '', content: '', image: '' });
     const [isEditing, setIsEditing] = useState(false);
-     // Function to handle close button click
-     const handleClose = () => {
+    // Function to handle close button click
+    const handleClose = () => {
         navigate('/');
     };
     // Fetch data from Firestore
@@ -28,14 +28,11 @@ export default function Features() {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             setFeatureData(docSnap.data());
-            
         } else {
             console.error("No such document!");
         }
-    setLoading(false); // Set loading to false after data is fetched
-
+        setLoading(false); // Set loading to false after data is fetched
     };
-
     // Save or update feature data
     const saveFeature = async () => {
         const updatedData = { ...Featuredata, [currentFeature.featureKey]: { Content: currentFeature.content, Image: currentFeature.image } };
@@ -43,7 +40,6 @@ export default function Features() {
         setFeatureData(updatedData);
         setShowModal(false);
     };
-
     // Delete feature
     const deleteFeature = async (key) => {
         const updatedData = { ...Featuredata };
@@ -51,93 +47,83 @@ export default function Features() {
         await setDoc(doc(firestoreDb, 'Features', 'FeaturesData'), updatedData);
         setFeatureData(updatedData);
     };
-
     // Open modal for editing/adding
     const openModal = (featureKey = '', content = '', image = '') => {
         setCurrentFeature({ featureKey, content, image });
         setIsEditing(!!featureKey);
         setShowModal(true);
     };
-
     useEffect(() => {
         fetchData();
     }, []);
-
     const renderFeatures = () => {
         const features = Object.keys(Featuredata || {});
         return (
             <>
-                    {/* <h3>{Featuredata.FeatureText}</h3> */}
-                    {loading ? (
-                        <Skeleton count={5} />
-            ) : (
-                <Row>
-                
-                    <button
+                {/* <h3>{Featuredata.FeatureText}</h3> */}
+                {loading ? (
+                    <Skeleton count={5} />
+                ) : (
+                    <Row>
+                        <button
                             type="button"
                             className="btn-close btn-close-black position-absolute border-0 shadow-none outlin-none"
-                            style={{  left: '40px', color: 'black' }}
+                            style={{ left: '40px', color: 'black' }}
                             aria-label="Close"
                             onClick={handleClose}
                         ></button>
-               <h3>Feature</h3>
+                        <h3>Feature</h3>
                     </Row>
-            )}
-             
+                )}
                 {features.map((key, index) => {
                     const { Image, Content } = Featuredata[key];
                     const isImageLeft = index % 2 === 0;
                     return (
-             
                         <Row key={key} className='my-4 pt-4'>
-                                       {loading ? (
-                            <Skeleton count={5} />
-                          ) : (
-<>
-
-{isImageLeft ? (
-    <>
-        <Col sm={12} md={4}>
-            <img src={Image} alt='Feature' className='img-fluid feature-Img' />
-        </Col>
-        <Col sm={12} md={8}> 
-            <div className='feature-content-controls Feature-Text' dangerouslySetInnerHTML={{ __html: Content }} />
-
-            {localStorage.getItem('Auth') === 'true' && (
-                <>
-                    <Button variant="warning" className='mx-3' onClick={() => openModal(key, Content, Image)}>Edit</Button>
-                    <Button variant="danger" onClick={() => deleteFeature(key)}>Delete</Button>
-                </>
-            )}
-        </Col>
-    </>
-) : (
-    <>
-        <Col sm={12} md={8} className='pt-3'>                                        
-        <div className='feature-content-controls Feature-Text' dangerouslySetInnerHTML={{ __html: Content }} />
-
-            {localStorage.getItem('Auth') === 'true' && (
-                <>
-                    <Button variant="warning" className='mx-3' onClick={() => openModal(key, Content, Image)}>Edit</Button>
-                    <Button variant="danger" onClick={() => deleteFeature(key)}>Delete</Button>
-                </>
-            )}
-        </Col>
-        <Col sm={12} md={4}>
-            <img src={Image} alt='Feature' className='img-fluid feature-Img' />
-        </Col>
-    </>
-)}
-</>
-                          )
-                        }
+                            {loading ? (
+                                <Skeleton count={5} />
+                            ) : (
+                                <>
+                                    {isImageLeft ? (
+                                        <>
+                                            <Col sm={12} md={4}>
+                                                <img src={Image} alt='Feature' className='img-fluid feature-Img' />
+                                            </Col>
+                                            <Col sm={12} md={8}>
+                                                <div className='feature-content-controls Feature-Text' dangerouslySetInnerHTML={{ __html: Content }} />
+                                                {localStorage.getItem('Auth') === 'true' && (
+                                                    <>
+                                                        <Button variant="warning" className='mx-3' onClick={() => openModal(key, Content, Image)}>Edit</Button>
+                                                        <Button variant="danger" onClick={() => deleteFeature(key)}>Delete</Button>
+                                                    </>
+                                                )}
+                                            </Col>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Col sm={12} md={8} className='pt-3'>
+                                                <div className='feature-content-controls Feature-Text' dangerouslySetInnerHTML={{ __html: Content }} />
+                                                {localStorage.getItem('Auth') === 'true' && (
+                                                    <>
+                                                        <Button variant="warning" className='mx-3' onClick={() => openModal(key, Content, Image)}>Edit</Button>
+                                                        <Button variant="danger" onClick={() => deleteFeature(key)}>Delete</Button>
+                                                    </>
+                                                )}
+                                            </Col>
+                                            <Col sm={12} md={4}>
+                                                <img src={Image} alt='Feature' className='img-fluid feature-Img' />
+                                            </Col>
+                                        </>
+                                    )}
+                                </>
+                            )
+                            }
                         </Row>
                     );
                 })}
             </>
         );
     };
-
     return (
         <div className='text-center pt-5'>
             <Container>

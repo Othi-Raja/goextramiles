@@ -31,3 +31,24 @@ border-radius: 10px;
     border-radius: 10px;
     transition: all .1s linear;
 }
+.career-edit-btn {
+    background-color: black;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 500;
+    border-radius: 10px;
+    min-width: 100px; /* Minimum width, button won't shrink smaller than this */
+    width: auto; /* Button size adjusts based on content */
+    display: inline-block; /* Ensures button won't expand to full width */
+  }
+  .community-edit-btn{
+    background-color: black;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 500;
+    border-radius: 10px;
+    min-width: 100px; /* Minimum width, button won't shrink smaller than this */
+    width: auto; /* Button size adjusts based on content */
+    display: inline-block; /* Ensures button won't expand to full width */
+  }
+  
