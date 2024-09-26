@@ -3,22 +3,20 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Container, Row, Button, Modal } from 'react-bootstrap';
 import { firestoreDb } from '../firebaseConfig'; // Firestore configuration
 import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css'; 
+import 'react-loading-skeleton/dist/skeleton.css';
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import './footerDec.css'
 import 'react-quill/dist/quill.snow.css'; // Quill editor styles
 import editIcon from '../assets/pencil-square.svg';
-
 export default function Careers() {
   const [Careerdata, setCareerData] = useState({});
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [careerTitle, setCareerTitle] = useState('');
   const [careerPara, setCareerPara] = useState('');
   const [careersUrl, setCareersUrl] = useState('');
   const navigate = useNavigate();
-
   // Fetch data from Firestore
   const fetchData = async () => {
     const docRef = doc(firestoreDb, 'Careers', 'CareersPage');
@@ -34,16 +32,13 @@ export default function Careers() {
     }
     setLoading(false); // Set loading to false after data is fetched
   };
-
   useEffect(() => {
     fetchData();
   }, []);
-
   // Function to handle close button click
   const handleClose = () => {
     navigate('/');
   };
-
   // Function to save changes
   const handleSaveChanges = async () => {
     const docRef = doc(firestoreDb, 'Careers', 'CareersPage');
@@ -59,7 +54,6 @@ export default function Careers() {
     });
     setShowModal(false); // Close modal after saving
   };
-
   const modules = {
     toolbar: [
       [{ 'header': '1' }, { 'header': '2' }, { 'header': '3' }],
@@ -70,7 +64,6 @@ export default function Careers() {
       ['clean']
     ]
   };
-
   const formats = [
     'header', 'font',
     'list', 'bullet',
@@ -78,13 +71,10 @@ export default function Careers() {
     'link',
     'align'
   ];
-
   return (
     <div>
       <Container>
         <Row className='pt-5 d-flex justify-content-center align-items-center'>
-     
-
           <button
             type="button"
             className="btn-close btn-close-black position-absolute border-0 shadow-none"
@@ -92,41 +82,38 @@ export default function Careers() {
             aria-label="Close"
             onClick={handleClose}
           ></button>
-            {loading ? (
-              <Skeleton count={5} />
-            ) : (
-              <h2 className='text-center'  dangerouslySetInnerHTML={{ __html: Careerdata.Title }} />
-            )}
+          {loading ? (
+            <Skeleton count={5} />
+          ) : (
+            <h2 className='text-center' dangerouslySetInnerHTML={{ __html: Careerdata.Title }} />
+          )}
         </Row>
-
         {loading ? (
           <Skeleton count={5} />
         ) : (
           <div className='pt-5' dangerouslySetInnerHTML={{ __html: Careerdata.CareerPara }} />
         )}
-
         <Row className='d-flex justify-content-center pt-5'>
           <button className=' career-edit-btn' onClick={() => window.open(Careerdata.CareersUrl, '_blank')}>Apply</button>
         </Row>
         {
-              localStorage.getItem('Auth') === 'true' &&(
-        <Row className='text-end'>
-        <Button className='border-0 shadow-none bg-transparent' onClick={() => setShowModal(true)}>
-            <img src={editIcon} alt="pen Icon" />
-          </Button>
-        </Row>
-              )}
+          localStorage.getItem('Auth') === 'true' && (
+            <Row className='text-end'>
+              <Button className='border-0 shadow-none bg-transparent' onClick={() => setShowModal(true)}>
+                <img src={editIcon} alt="pen Icon" />
+              </Button>
+            </Row>
+          )}
       </Container>
-
       {/* Modal for editing Title, CareerPara, and CareersUrl */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" dialogClassName='modal-fullscreen'>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Career Section</Modal.Title>
+          <Modal.Title>Career</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="mb-3">
             <label>Career Title</label>
-            <ReactQuill 
+            <ReactQuill
               modules={modules}
               formats={formats}
               value={careerTitle}
@@ -135,7 +122,7 @@ export default function Careers() {
           </div>
           <div className="mb-3">
             <label>Career Paragraph</label>
-            <ReactQuill 
+            <ReactQuill
               modules={modules}
               formats={formats}
               value={careerPara}
@@ -144,11 +131,11 @@ export default function Careers() {
           </div>
           <div className="mb-3">
             <label>Career URL</label>
-            <input 
-              type="text" 
-              className="form-control" 
-              value={careersUrl} 
-              onChange={(e) => setCareersUrl(e.target.value)} 
+            <input
+              type="text"
+              className="form-control"
+              value={careersUrl}
+              onChange={(e) => setCareersUrl(e.target.value)}
             />
           </div>
         </Modal.Body>

@@ -9,7 +9,7 @@ import { firestoreDb } from './firebaseConfig';
 import { signOut } from 'firebase/auth';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 import { faPen, faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -17,7 +17,6 @@ import Backdrop from '@mui/material/Backdrop';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Switch from 'react-switch';
-
 // fetch Footer data
 const fetchfooterContent = async () => {
   try {
@@ -30,7 +29,6 @@ const fetchfooterContent = async () => {
     return [];
   }
 };
-
 const updatefooterItem = async (id, updatedItem) => {
   try {
     const itemDoc = doc(firestoreDb, 'FooterItems', id); // Corrected the collection name to 'About'
@@ -74,27 +72,26 @@ export default function MyNavBar() {
   });
   const [Footerlistdata, setFooterListData] = useState({});
   const [FooterformData, setFooterFormData] = useState({
-      Footeritem1: {},
-      FooterItem2: {},
-      Footeritem3: {},
-      Footeritem4: {}
+    Footeritem1: {},
+    FooterItem2: {},
+    Footeritem3: {},
+    Footeritem4: {}
   });
-   // Fetch data from Firestore
-   const fetchfooterlistData = async () => {
+  // Fetch data from Firestore
+  const fetchfooterlistData = async () => {
     const docRef = doc(firestoreDb, 'Home', 'HomePageData');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-        setFooterListData(docSnap.data());
-        setFooterFormData(docSnap.data());  // Initialize formData with fetched data
+      setFooterListData(docSnap.data());
+      setFooterFormData(docSnap.data());  // Initialize formData with fetched data
     } else {
-        console.error("No such document!");
+      console.error("No such document!");
     }
-};
-const handlefooterListInputChange = (e, section, key) => {
-  const updatedSection = { ...FooterformData[section], [key]: e.target.value };
-  setFooterFormData({ ...FooterformData, [section]: updatedSection });
-};
-
+  };
+  const handlefooterListInputChange = (e, section, key) => {
+    const updatedSection = { ...FooterformData[section], [key]: e.target.value };
+    setFooterFormData({ ...FooterformData, [section]: updatedSection });
+  };
   const [openDropdown, setOpenDropdown] = useState(null);
   const toggleDropdown = (dropdown) => {
     if (openDropdown === dropdown) {
@@ -191,12 +188,12 @@ const handlefooterListInputChange = (e, section, key) => {
       }
     }));
   };
-  const location = useLocation();
-  useEffect(() => {
-    if (location.pathname === '/') {
-      localStorage.clear();
-    }
-  }, [location.pathname]);
+  // const location = useLocation();
+  // useEffect(() => {
+  //   if (location.pathname === '/') {
+  //     localStorage.clear();
+  //   }
+  // }, [location.pathname]);
   useEffect(() => {
     const auth = localStorage.getItem('Auth');
     if (auth === 'true') {
@@ -271,7 +268,6 @@ const handlefooterListInputChange = (e, section, key) => {
     try {
       // Home data updates
       const docRef = doc(firestoreDb, 'Home', 'HomePageData');
-      
       // Filter out undefined values for Home data
       const updateData = {};
       if (editableHomeData.Txt1 !== undefined) updateData.Txt1 = editableHomeData.Txt1;
@@ -279,11 +275,9 @@ const handlefooterListInputChange = (e, section, key) => {
       if (editableHomeData.RegistrationItem !== undefined) updateData.RegistrationItem = editableHomeData.RegistrationItem;
       if (editableHomeData.BgImg !== undefined) updateData.BgImg = editableHomeData.BgImg;
       if (editableHomeData.RegistrationLink !== undefined) updateData.RegistrationLink = editableHomeData.RegistrationLink;
-  
       // Update Home data in Firestore
       await updateDoc(docRef, updateData); // Update only fields with valid values
       setHomeData(editableHomeData); // Update local state for Home data
-  
       // Footer data updates
       const footerUpdateData = {};
       // Ensure only valid fields are updated
@@ -291,17 +285,13 @@ const handlefooterListInputChange = (e, section, key) => {
       if (FooterformData.FooterItem2 !== undefined) footerUpdateData.FooterItem2 = FooterformData.FooterItem2;
       if (FooterformData.Footeritem3 !== undefined) footerUpdateData.Footeritem3 = FooterformData.Footeritem3;
       if (FooterformData.Footeritem4 !== undefined) footerUpdateData.Footeritem4 = FooterformData.Footeritem4;
-  
       // Update Footer data in Firestore
       await updateDoc(docRef, footerUpdateData);  // Use the same docRef, as both Home and Footer are in 'HomePageData'
-      
       // Fetch and refresh updated footer data
       await fetchfooterlistData();
-  
-  } catch (error) {
+    } catch (error) {
       console.error("Error updating document: ", error);
-  }
-  
+    }
     //footer item list 
     console.log('hi vadaki')
     setShowModal(false);
@@ -454,16 +444,17 @@ const handlefooterListInputChange = (e, section, key) => {
             </>
             <>
               <Row>
+                <h4 className='pb-4'>Footer Components</h4>
                 <Col>
                   {/* Edit Footer Item 1 */}
                   <Form.Group controlId="footerItem1">
-                    <Form.Label  className='text-black-50'>{FooterformData?.Footeritem1?.Heading}</Form.Label>
+                    <Form.Label className='text-black-50'>{FooterformData?.Footeritem1?.Heading}</Form.Label>
                     <Form.Control
                       type="text"
                       className='mt-2 border-2 outline-none shadow-none'
                       value={FooterformData?.Footeritem1?.Heading || ''}
                       onChange={(e) => handlefooterListInputChange(e, 'Footeritem1', 'Heading')}
-                    /> 
+                    />
                     <Form.Control
                       type="text"
                       className='mt-2 border-2 outline-none shadow-none'
@@ -533,8 +524,20 @@ const handlefooterListInputChange = (e, section, key) => {
                     <Form.Control
                       type="text"
                       className='mt-2 border-2 outline-none shadow-none'
+                      value={FooterformData?.Footeritem3?.AndroidUrl || ''}
+                      onChange={(e) => handlefooterListInputChange(e, 'Footeritem3', 'AndroidUrl')}
+                    />
+                    <Form.Control
+                      type="text"
+                      className='mt-2 border-2 outline-none shadow-none'
                       value={FooterformData?.Footeritem3?.SubTitle2 || ''}
                       onChange={(e) => handlefooterListInputChange(e, 'Footeritem3', 'SubTitle2')}
+                    />
+                    <Form.Control
+                      type="text"
+                      className='mt-2 border-2 outline-none shadow-none'
+                      value={FooterformData?.Footeritem3?.IOSUrl || ''}
+                      onChange={(e) => handlefooterListInputChange(e, 'Footeritem3', 'IOSUrl')}
                     />
                   </Form.Group>
                 </Col>

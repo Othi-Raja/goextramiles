@@ -3,21 +3,19 @@ import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
 import { firestoreDb } from '../firebaseConfig'; // Firestore configuration
 import Skeleton from 'react-loading-skeleton';
-import 'react-loading-skeleton/dist/skeleton.css'; 
+import 'react-loading-skeleton/dist/skeleton.css';
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import './footerDec.css';
 import 'react-quill/dist/quill.snow.css'; // Quill editor styles
 import editIcon from '../assets/pencil-square.svg';
-
 export default function Privacy() {
   const [Pdata, setprivacyData] = useState({});
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [PvtTitle, setprivacyTitle] = useState('');
   const [pvtPara, setprivacyPara] = useState('');
   const navigate = useNavigate();
-
   // Fetch data from Firestore
   const fetchData = async () => {
     const docRef = doc(firestoreDb, 'Privacy', 'PrivacyPg');
@@ -32,16 +30,13 @@ export default function Privacy() {
     }
     setLoading(false); // Set loading to false after data is fetched
   };
-
   useEffect(() => {
     fetchData();
   }, []);
-
   // Function to handle close button click
   const handleClose = () => {
     navigate('/');
   };
-
   // Function to save changes
   const handleSaveChanges = async () => {
     const docRef = doc(firestoreDb, 'Privacy', 'PrivacyPg');
@@ -55,7 +50,6 @@ export default function Privacy() {
     });
     setShowModal(false); // Close modal after saving
   };
-
   const modules = {
     toolbar: [
       [{ 'header': '1' }, { 'header': '2' }, { 'header': '3' }],
@@ -66,7 +60,6 @@ export default function Privacy() {
       ['clean']
     ]
   };
-
   const formats = [
     'header', 'font',
     'list', 'bullet',
@@ -74,7 +67,6 @@ export default function Privacy() {
     'link',
     'align'
   ];
-
   return (
     <div>
       <Container>
@@ -86,7 +78,6 @@ export default function Privacy() {
             aria-label="Close"
             onClick={handleClose}
           ></button>
-
           {loading ? (
             <Skeleton count={5} />
           ) : (
@@ -102,23 +93,21 @@ export default function Privacy() {
             </Col>
           )}
         </Row>
-
         {loading ? (
           <Skeleton count={5} />
         ) : (
           <div className='pt-5' dangerouslySetInnerHTML={{ __html: Pdata.pvtPara }} />
         )}
       </Container>
-
       {/* Modal for editing Title and Paragraph */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" dialogClassName='modal-fullscreen'>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Privacy Section</Modal.Title>
+          <Modal.Title className='text-black-50'>Privacy</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="mb-3">
             <label>Title</label>
-            <ReactQuill 
+            <ReactQuill
               modules={modules}
               formats={formats}
               value={PvtTitle}
@@ -126,8 +115,8 @@ export default function Privacy() {
             />
           </div>
           <div className="mb-3">
-            <label>Paragraph</label>
-            <ReactQuill 
+            <label className='text-black-50'>Paragraph</label>
+            <ReactQuill
               modules={modules}
               formats={formats}
               value={pvtPara}

@@ -13,7 +13,6 @@ function App() {
   const location = useLocation();
   const [Homedata, setHomeData] = useState({});
   const [loading, setLoading] = useState(true); // Add loading state
-
   // Fetch data from Firestore
   const fetchData = async () => {
     const docRef = doc(firestoreDb, 'Home', 'HomePageData');
@@ -24,7 +23,6 @@ function App() {
       console.error("No such document!");
     }
     setLoading(false); // Set loading to false after data is fetched
-
   };
   useEffect(() => {
     fetchData();
@@ -37,46 +35,46 @@ function App() {
   }, [location]);
   return (
     <div className="Home" id='Home'>
-             {loading ? (
-              <Skeleton count={10} height={50}  />
+      {loading ? (
+        <Skeleton count={10} height={50} />
+      ) : (
+        <div id='main-home' style={{
+          backgroundImage: `url(${Homedata.BgImg})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+          height: '100vh'
+        }}>
+          <Nav />
+          <div className='w-100 h-100 position-absolute text-center home-text-align'>
+            <div className="main-title">
+              {Homedata.Txt1}
+            </div>
+            <div className="main-subtitle">
+              <span>{Homedata.Txt2}</span>
+            </div>
+            {loading ? (
+              <Skeleton count={10} height={50} />
             ) : (
-      <div id='main-home' style={{
-        backgroundImage: `url(${Homedata.BgImg})`,
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        height: '100vh'
-      }}>
-        <Nav />
-        <div className='w-100 h-100 position-absolute text-center home-text-align'>
-          <div className="main-title">
-            {Homedata.Txt1}
-          </div>
-          <div className="main-subtitle">
-            <span>{Homedata.Txt2}</span>
-          </div>
-          {loading ? (
-              <Skeleton count={10} height={50}  />
-            ) : (
-          <div className="mt-4" style={{ display: Homedata.RegistrationItem?.length === 0 ? 'none' : 'block' }}>
-            {Homedata.RegistrationLink ? (
-              <a href={Homedata.RegistrationLink} className='registor-btn'>
-                {Homedata.RegistrationItem}
-              </a>
-            ) : (
-              <Link to="/Registor"  target='_blank' className='registor-btn'>
-                {Homedata.RegistrationItem}
-              </Link>
+              <div className="mt-4" style={{ display: Homedata.RegistrationItem?.length === 0 ? 'none' : 'block' }}>
+                {Homedata.RegistrationLink ? (
+                  <a href={Homedata.RegistrationLink} className='registor-btn'>
+                    {Homedata.RegistrationItem}
+                  </a>
+                ) : (
+                  <Link to="/Registor" target='_blank' className='registor-btn'>
+                    {Homedata.RegistrationItem}
+                  </Link>
+                )}
+              </div>
             )}
           </div>
-            )}
+          {/* Always show the Routes */}
+          <Routes>
+            <Route path="/Admin" element={<Admin />} />
+          </Routes>
         </div>
-        {/* Always show the Routes */}
-        <Routes>
-          <Route path="/Admin" element={<Admin />} />
-        </Routes>
-      </div>
-            )}
+      )}
     </div>
   );
 }

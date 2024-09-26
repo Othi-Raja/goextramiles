@@ -9,8 +9,6 @@ import ReactQuill from 'react-quill'; // Quill editor
 import 'react-quill/dist/quill.snow.css'; // Quill editor styles
 import editIcon from '../assets/pencil-square.svg';
 import { useNavigate } from 'react-router-dom';
-
-
 export default function AboutUs() {
   const [Aboutdata, setAboutData] = useState({});
   const [loading, setLoading] = useState(true);
@@ -18,7 +16,6 @@ export default function AboutUs() {
   const [aboutTitle, setAboutTitle] = useState('');
   const [aboutPara, setAboutPara] = useState('');
   const navigate = useNavigate();
-
   // Function to handle close button click
   const handleClose = () => {
     navigate('/');
@@ -37,11 +34,9 @@ export default function AboutUs() {
     }
     setLoading(false); // Set loading to false after data is fetched
   };
-
   useEffect(() => {
     fetchData();
   }, []);
-
   const handleSaveChanges = async () => {
     const docRef = doc(firestoreDb, 'About', 'aboutus');
     await updateDoc(docRef, {
@@ -88,41 +83,31 @@ export default function AboutUs() {
               aria-label="Close"
               onClick={handleClose}
             ></button>
-
             {loading ? (
               <Skeleton count={5} /> // Show a sketch loader with 5 lines
             ) : (
               <div className=' d-flex justify-content-center'>
-
                 <h2 dangerouslySetInnerHTML={{ __html: Aboutdata.AboutTitle }} />
-                {localStorage.getItem('Auth') === 'true' &&(
-
-                <Button className='border-0 shadow-none bg-transparent' style={{ marginTop: '-17px' }} onClick={() => setShowModal(true)}>
-                  <img src={editIcon} alt="pen Icon" />
-                </Button>
+                {localStorage.getItem('Auth') === 'true' && (
+                  <Button className='border-0 shadow-none bg-transparent' style={{ marginTop: '-17px' }} onClick={() => setShowModal(true)}>
+                    <img src={editIcon} alt="pen Icon" />
+                  </Button>
                 )
                 }
               </div>
-
             )}
-
-
           </Row>
-
           {loading ? (
             <Skeleton count={5} /> // Show a sketch loader with 5 lines
           ) : (
             <div dangerouslySetInnerHTML={{ __html: Aboutdata.AboutPara }} />
           )}
         </Container>
-
       </>
-
-
       {/* Modal for editing AboutTitle and AboutPara */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" dialogClassName='modal-fullscreen'>
         <Modal.Header closeButton>
-          <Modal.Title>Edit About Section</Modal.Title>
+          <Modal.Title>About</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="mb-3">

@@ -17,7 +17,6 @@ export default function Registration() {
     const [showModal, setShowModal] = useState(false); // Show modal for editing URLs
     const [appStoreUrl, setAppStoreUrl] = useState('');
     const [PaymentRegLink, setPaymentRegLinkUrl] = useState('');
-
     const [playStoreUrl, setPlayStoreUrl] = useState('');
     const [showAppStore, setShowAppStore] = useState(true); // Toggle AppStore URL visibility
     const [showPlayStore, setShowPlayStore] = useState(true); // Toggle PlayStore URL visibility
@@ -77,10 +76,11 @@ export default function Registration() {
                 PaymentRegLink
             });
             console.log("Document successfully updated!");
+            handleModalClose();
         } catch (error) {
             console.error("Error updating document: ", error);
         }
-        setEditMode(false); // Exit edit mode after saving
+        // Exit edit mode after saving
     };
     const handleModalShow = () => setShowModal(true);
     const handleModalClose = () => setShowModal(false);
@@ -170,18 +170,13 @@ export default function Registration() {
                     </Container>
                     {localStorage.getItem('Auth') === 'true' && (
                         <>
-                    <>
-                    <Col style={{ display: editMode ? 'none' : 'block' }}>
-                    
-                                <Button variant="primary" className='px-5'  onClick={handleEdit}>
-                                    {editMode ? 'Save Changes' : 'Edit'}
-                                </Button>
-                    </Col>
-                    </>
-
-                   
-                             
-                         
+                            <>
+                                <Col style={{ display: editMode ? 'none' : 'block' }}>
+                                    <Button variant="primary" className='px-5' onClick={handleEdit}>
+                                        {editMode ? 'Save Changes' : 'Edit'}
+                                    </Button>
+                                </Col>
+                            </>
                             {editMode && (
                                 <>
                                     <Col>
@@ -191,15 +186,10 @@ export default function Registration() {
                                         <Button variant="secondary" onClick={addRow}>
                                             Add Row
                                         </Button>
-                                <Button variant="secondary" className="px-3 ms-2 btn" onClick={handleModalShow}>
-                                  Edit Apps
-                                </Button>
+                                        <Button variant="secondary" className="px-3 ms-2 btn" onClick={handleModalShow}>
+                                            Edit Apps
+                                        </Button>
                                     </Col>
-                                  
-                         
-                       
-                      
-                  
                                 </>
                             )}
                         </>
@@ -208,37 +198,65 @@ export default function Registration() {
                 {/* Download the App Section with Pen Icon */}
                 <Row className='text-center pt-4'>
                     <span className='text-black-50'>Download the App</span>
-                 
                 </Row>
                 {/* App Store and Play Store Icons */}
                 <Row className='w-100 d-flex justify-content-center pt-4'>
-                    {showAppStore && (
-                         
-
-                            <img   onClick={() => window.open( Regdata.appStoreUrl,'_blank')}  src={appstoreIcon} alt="AppStore" style={{ width: '150px', height: '100%' }} />
-                        
-                    )}
-                    {showPlayStore && ( 
-
-
-                            <img   onClick={() => window.open(Regdata.playStoreUrl,'_blank')}  src={googleplayIcon} alt="PlayStore" style={{ width: '150px' }} />
-                      
-                    )}
+                    <Col sm={2}></Col>
+                    <Col
+                        sm={6}
+                        className="d-flex justify-content-center align-items-center mb-3 mb-sm-0 "
+                        style={{ textAlign: 'center' }} // Ensures the content is centered even if flex doesn't apply in certain cases
+                    >
+                        {showAppStore && (
+                            <img
+                                onClick={() => window.open(Regdata.appStoreUrl, '_blank')}
+                                src={appstoreIcon}
+                                alt="AppStore"
+                                style={{ width: '150px', height: '100%', marginRight: '10px' }} // Optional: Adds space between images
+                            />
+                        )}
+                        {showPlayStore && (
+                            <img
+                                onClick={() => window.open(Regdata.playStoreUrl, '_blank')}
+                                src={googleplayIcon}
+                                alt="PlayStore"
+                                style={{ width: '150px' }}
+                            />
+                        )}
+                    </Col>
+                    <Col
+                        sm={2}
+                        className="d-flex justify-content-sm-end justify-content-center align-items-center"
+                        style={{ textAlign: 'center' }} // Optional: Keeps the text centered on mobile if needed
+                    >
+                        <span className='register-pg'>
+                            {Regdata.PaymentRegLink ? (
+                                <a
+                                    href={Regdata.PaymentRegLink}
+                                    target='_blank'
+                                    rel="noreferrer"
+                                    className='Feature-reg-btn btn'
+                                    style={{ position: 'relative', right: '0',marginTop:'-25px' }} // Adjusted to be relative, so it aligns properly
+                                >
+                                    REGISTER
+                                </a>
+                            ) : (
+                                <Link
+                                    to="/Verification"
+                                    className='Feature-reg-btn btn'
+                                    style={{ position: 'relative', right: '0' }}
+                                >
+                                    REGISTER
+                                </Link>
+                            )}
+                        </span>
+                    </Col>
                 </Row>
                 <Col className='pb-4 mb-4 mt-4'>
-                    {
-                        Regdata.PaymentRegLink ? (
-                            <a href={Regdata.PaymentRegLink} target='_blank' rel="noreferrer" className='float-end Feature-reg-btn btn' style={{ position: 'absolute', right: '50px' }}>REGISTER</a>
-
-                        ): (
-
-                            <Link to="/Verification" className='float-end Feature-reg-btn btn' style={{ position: 'absolute', right: '50px' }}>REGISTER</Link>
-                        )
-                    }
                 </Col>
             </Container>
             {/* Modal for Editing URLs */}
-            <Modal show={showModal} onHide={handleModalClose}>
+            <Modal show={showModal} onHide={handleModalClose}  size="lg" dialogClassName='modal-fullscreen'>
                 <Modal.Header closeButton>
                     <Modal.Title>AppStore and PlayStore</Modal.Title>
                 </Modal.Header>
@@ -276,7 +294,7 @@ export default function Registration() {
                             onChange={() => setShowPlayStore(!showPlayStore)}
                         />
                     </Form.Group>
-                    <Modal.Title>Registration Link</Modal.Title>
+                    <Modal.Title className='pt-4'>Registration Link</Modal.Title>
                     <Form.Group controlId="playStoreUrl" className="mt-3">
                         <Form.Label>PlayStore URL</Form.Label>
                         <Form.Control

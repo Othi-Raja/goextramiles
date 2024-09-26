@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { firestoreDb } from '../firebaseConfig';
-import { Container, Row, Col, Button, Modal, Form } from 'react-bootstrap';
+import { Container, Row, Col, Button, Modal, Form, Navbar } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -64,16 +64,23 @@ export default function Features() {
                 {loading ? (
                     <Skeleton count={5} />
                 ) : (
-                    <Row>
+                    <Navbar className=' d-flex justify-content-center align-items-center sticky-top  glass-bg' style={{ borderRadius: '0 0 20px 20px' }}>
                         <button
                             type="button"
-                            className="btn-close btn-close-black position-absolute border-0 shadow-none outlin-none"
+                            className="btn-close btn-close-black position-absolute border-0 shadow-none"
                             style={{ left: '40px', color: 'black' }}
                             aria-label="Close"
                             onClick={handleClose}
                         ></button>
-                        <h3>Feature</h3>
-                    </Row>
+                        {loading ? (
+                            <Skeleton count={5} />
+                        ) : (
+                            // Align the title and the edit button on the same row
+                            <Col xs={12} className="d-flex align-items-center justify-content-center">
+                                <h2 className='text-center'>Features</h2>
+                            </Col>
+                        )}
+                    </Navbar>
                 )}
                 {features.map((key, index) => {
                     const { Image, Content } = Featuredata[key];
@@ -87,7 +94,7 @@ export default function Features() {
                                     {isImageLeft ? (
                                         <>
                                             <Col sm={12} md={4}>
-                                                <img src={Image} alt='Feature' className='img-fluid feature-Img' />
+                                                <img src={Image} alt='Feature' className='img-fluid feature-Img  cstm-margin-feature' />
                                             </Col>
                                             <Col sm={12} md={8}>
                                                 <div className='feature-content-controls Feature-Text' dangerouslySetInnerHTML={{ __html: Content }} />
@@ -101,17 +108,17 @@ export default function Features() {
                                         </>
                                     ) : (
                                         <>
-                                            <Col sm={12} md={8} className='pt-3'>
-                                                <div className='feature-content-controls Feature-Text' dangerouslySetInnerHTML={{ __html: Content }} />
+                                            <Col sm={12} md={4} className="order-sm-1 order-md-2">
+                                                <img src={Image} alt="Feature" className="img-fluid feature-Img cstm-margin-feature " />
+                                            </Col>
+                                            <Col sm={12} md={8} className=" order-sm-2 order-md-1">
+                                                <div className="feature-content-controls Feature-Text" dangerouslySetInnerHTML={{ __html: Content }} />
                                                 {localStorage.getItem('Auth') === 'true' && (
                                                     <>
-                                                        <Button variant="warning" className='mx-3' onClick={() => openModal(key, Content, Image)}>Edit</Button>
+                                                        <Button variant="warning" className="mx-3" onClick={() => openModal(key, Content, Image)}>Edit</Button>
                                                         <Button variant="danger" onClick={() => deleteFeature(key)}>Delete</Button>
                                                     </>
                                                 )}
-                                            </Col>
-                                            <Col sm={12} md={4}>
-                                                <img src={Image} alt='Feature' className='img-fluid feature-Img' />
                                             </Col>
                                         </>
                                     )}
@@ -135,7 +142,7 @@ export default function Features() {
                 )}
             </Container>
             {/* Modal for adding/editing feature */}
-            <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" dialogClassName='modal-fullscreen'>
                 <Modal.Header closeButton>
                     <Modal.Title>{isEditing ? 'Edit Feature' : 'Add New Feature'}</Modal.Title>
                 </Modal.Header>

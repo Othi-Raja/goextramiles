@@ -6,11 +6,9 @@ import appLogo from './assets/white_gem_logo.png';
 import { doc, getDoc } from 'firebase/firestore';
 import { firestoreDb } from './firebaseConfig';
 import { Link } from 'react-router-dom';
-
 export default function FooterList() {
     const [Footerlistdata, setFooterListData] = useState({});
     const [isDisabled, setIsDisabled] = useState(false); // Control the disabled state
-
     // Fetch data from Firestore
     const fetchData = async () => {
         const docRef = doc(firestoreDb, 'Home', 'HomePageData');
@@ -21,11 +19,9 @@ export default function FooterList() {
             console.error("No such document!");
         }
     };
-
     useEffect(() => {
         fetchData();
     }, []);
-
     return (
         <div id='footer'>
             <Container>
@@ -111,23 +107,25 @@ export default function FooterList() {
                     </Col>
                     <Col className='z-2'>
                         <ul className='footer-subtitle-list'>
-                            <li><span className='footer-title'>{Footerlistdata?.Footeritem3?.Heading}</span></li>
                             <li>
-                                {isDisabled ? (
-                                    <span className="text-white-50">{Footerlistdata?.Footeritem3?.SubTitle1}</span>
-                                ) : (
-                                    <Link to="/Android" target='_blank' className='text-white-50'>
+                                <span className='footer-title'>{Footerlistdata?.Footeritem3?.Heading}</span>
+                            </li>
+                            <li>
+                                {Footerlistdata?.Footeritem3?.AndroidUrl ? (
+                                    <a href={Footerlistdata?.Footeritem3?.AndroidUrl} target='_blank' className='text-white-50'>
                                         {Footerlistdata?.Footeritem3?.SubTitle1}
-                                    </Link>
+                                    </a>
+                                ) : (
+                                    <span className="text-white-50">{Footerlistdata?.Footeritem3?.SubTitle1}</span>
                                 )}
                             </li>
                             <li>
-                                {isDisabled ? (
-                                    <span className="text-white-50">{Footerlistdata?.Footeritem3?.SubTitle2}</span>
-                                ) : (
-                                    <Link to="/iPhone" target='_blank' className='text-white-50'>
+                                {Footerlistdata?.Footeritem3?.IOSUrl ? (
+                                    <a href={Footerlistdata?.Footeritem3?.IOSUrl} target='_blank' className='text-white-50'>
                                         {Footerlistdata?.Footeritem3?.SubTitle2}
-                                    </Link>
+                                    </a>
+                                ) : (
+                                    <span className="text-white-50">{Footerlistdata?.Footeritem3?.SubTitle2}</span>
                                 )}
                             </li>
                         </ul>
