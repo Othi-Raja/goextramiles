@@ -93,7 +93,7 @@ export default function Registration() {
                     <div className="position-relative">
                         <button
                             type="button"
-                            className="btn-close btn-close-white position-absolute"
+                            className="btn-close btn-close-white position-absolute border-0 shadow-none "
                             style={{ top: '30px', left: '40px', color: 'white' }}
                             aria-label="Close"
                             onClick={handleClose}
@@ -236,7 +236,7 @@ export default function Registration() {
                                     target='_blank'
                                     rel="noreferrer"
                                     className='Feature-reg-btn btn'
-                                    style={{ position: 'relative', right: '0',marginTop:'-25px' }} // Adjusted to be relative, so it aligns properly
+                                    style={{ position: 'relative', right: '0', marginTop: '-25px' }} // Adjusted to be relative, so it aligns properly
                                 >
                                     REGISTER
                                 </a>
@@ -256,7 +256,7 @@ export default function Registration() {
                 </Col>
             </Container>
             {/* Modal for Editing URLs */}
-            <Modal show={showModal} onHide={handleModalClose}  size="lg" dialogClassName='modal-fullscreen'>
+            <Modal show={showModal} onHide={handleModalClose} size="lg" dialogClassName='modal-fullscreen'>
                 <Modal.Header closeButton>
                     <Modal.Title>AppStore and PlayStore</Modal.Title>
                 </Modal.Header>

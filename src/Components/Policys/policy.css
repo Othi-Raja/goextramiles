@@ -48,20 +48,20 @@ li::marker {
   h1{
     overflow-y: hidden;
   }
-  .Quill-text ul li::before {
-    content: '• '; /* Adds the bullet before each list item */
-    color: rgb(255, 255, 255);  /* Customize the color of the bullet */
-   /* Adjust the size of the bullet */
+  /* .Quill-text ul li::before {
+    content: '• ';
+    color: rgb(255, 255, 255);  
+ 
   
-    margin-right: 5px; /* Space between bullet and text */
-  }
-  .Quill-text ol li::before {
-    content: counter(li) "."; /* Manually add numbers */
-    counter-increment: li;  /* Increment the counter */
-    color: rgb(255, 255, 255);  /* Customize the color */
-     /* Adjust the size */
-    margin-right: 5px;  /* Space between the number and text */
-  }
+    margin-right: 5px; 
+  } */
+  /* .Quill-text ol li::before {
+    content: counter(li) ".";
+    counter-increment: li;  
+    color: rgb(255, 255, 255);  
+     
+    margin-right: 5px; 
+  } */
   
   .Quill-text ol {
     counter-reset: li;  /* Initialize the counter */

@@ -28,7 +28,7 @@ export default function FooterList() {
                 <Row>
                     <Col>
                         <Navbar.Brand href="#home" className="d-flex align-items-center">
-                            <img src={appLogo} alt="img" width={'185px'} className="me-2" style={{ cursor: 'default' }} />
+                            <img src={appLogo} alt="img" width={'185px'} className="me-2 custm-margin-footerlist" style={{ cursor: 'default' }} />
                         </Navbar.Brand>
                     </Col>
                     {/* Footer Items Display */}

@@ -152,6 +152,7 @@
   .register-pg {
     margin-top: 30px;
   }
+
 }
 @media (min-width: 320px) {
   .cstm-margin-feature {
@@ -159,6 +160,10 @@
   }
   .register-pg {
     margin-top: 30px;
+  }
+  .custm-margin-footerlist{
+    margin-bottom: 40px;
+   
   }
 }
 /* @media (min-width: 576px) and (max-width: 767.98px) {

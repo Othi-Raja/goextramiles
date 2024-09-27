@@ -78,7 +78,7 @@ export default function AboutUs() {
           <Row className='pt-5 text-center d-flex'>
             <button
               type="button"
-              className="btn-close btn-close-black position-absolute border-0 shadow-none outlin-none"
+              className="btn-close btn-close-black position-absolute border-0 shadow-none outlin-none "
               style={{ left: '40px', color: 'black' }}
               aria-label="Close"
               onClick={handleClose}
