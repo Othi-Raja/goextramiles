@@ -9,6 +9,8 @@ import '../App.css'; // Custom CSS if needed.
 import '../Policys/policy.css';
 import appstoreIcon from '../assets/appstore_icon.png';
 import googleplayIcon from '../assets/googleplay_icon.png';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 export default function Registration() {
     const navigate = useNavigate();
     const [Regdata, setRegData] = useState({});
@@ -16,6 +18,7 @@ export default function Registration() {
     const [tableData, setTableData] = useState([]);
     const [showModal, setShowModal] = useState(false); // Show modal for editing URLs
     const [appStoreUrl, setAppStoreUrl] = useState('');
+    const [loading, setLoading] = useState(true);
     const [PaymentRegLink, setPaymentRegLinkUrl] = useState('');
     const [playStoreUrl, setPlayStoreUrl] = useState('');
     const [showAppStore, setShowAppStore] = useState(true); // Toggle AppStore URL visibility
@@ -35,6 +38,7 @@ export default function Registration() {
         } else {
             console.error("No such document!");
         }
+        setLoading(false); // Set loading to false after data is fetched
     };
     useEffect(() => {
         fetchData();
@@ -89,84 +93,94 @@ export default function Registration() {
         <>
             <Container fluid className="position-relative">
                 <Row className="justify-content-center mt-3">
-                    {/* Responsive banner with close button inside */}
-                    <div className="position-relative">
-                        <button
-                            type="button"
-                            className="btn-close btn-close-white position-absolute border-0 shadow-none "
-                            style={{ top: '30px', left: '40px', color: 'white' }}
-                            aria-label="Close"
-                            onClick={handleClose}
-                        ></button>
-                        <img
-                            src={Regdata.bannerImg}
-                            alt="banner"
-                            style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }}
-                            className="img-fluid img-thumbnail"
-                        />
-                    </div>
+                    {loading ? (
+                        <Skeleton count={5} /> // Show a sketch loader with 5 lines
+                    ) : (
+                        // Responsive banner with close button inside 
+                        <div className="position-relative">
+                            <button
+                                type="button"
+                                className="btn-close btn-close-white position-absolute border-0 shadow-none "
+                                style={{ top: '30px', left: '40px', color: 'white' }}
+                                aria-label="Close"
+                                onClick={handleClose}
+                            ></button>
+                            <img
+                                src={Regdata.bannerImg}
+                                alt="banner"
+                                style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }}
+                                className="img-fluid img-thumbnail"
+                            />
+                        </div>
+                    )
+                    }
                     {/* Editable Table */}
                     <Container>
-                        <Table className='mt-3'>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th className='bg-black text-white text-center' style={{ fontWeight: '500' }}>REGISTER FROM MOBILE</th>
-                                    <th className='text-center text-gray' style={{ fontWeight: '500', background: '#C8C8C8' }}>REGISTER FROM WEB</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {tableData.map((row, index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            {editMode && (
-                                                <Button
-                                                    variant="danger"
-                                                    size="sm"
-                                                    onClick={() => deleteRow(index)}
-                                                >
-                                                    Delete
-                                                </Button>
-                                            )}
-                                        </td>
-                                        <td className='pt-4'>
-                                            {editMode ? (
-                                                <ReactQuill
-                                                    theme="snow"
-                                                    value={row.description}
-                                                    onChange={(value) => handleInputChange(index, 'description', value)}
-                                                />
-                                            ) : (
-                                                <div dangerouslySetInnerHTML={{ __html: row.description }} />
-                                            )}
-                                        </td>
-                                        <td className='text-center pt-4' style={{ background: '#D4D4D4' }}>
-                                            {editMode ? (
-                                                <Form.Control
-                                                    type="text"
-                                                    value={row.mobile}
-                                                    onChange={(e) => handleInputChange(index, 'mobile', e.target.value)}
-                                                />
-                                            ) : (
-                                                row.mobile
-                                            )}
-                                        </td>
-                                        <td className='text-center pt-4'>
-                                            {editMode ? (
-                                                <Form.Control
-                                                    type="text"
-                                                    value={row.web}
-                                                    onChange={(e) => handleInputChange(index, 'web', e.target.value)}
-                                                />
-                                            ) : (
-                                                row.web
-                                            )}
-                                        </td>
+                        {loading ? (
+                            <Skeleton count={5} /> // Show a sketch loader with 5 lines
+                        ) : (
+                            <Table className='mt-3'>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th className='bg-black text-white text-center' style={{ fontWeight: '500' }}>REGISTER FROM MOBILE</th>
+                                        <th className='text-center text-gray' style={{ fontWeight: '500', background: '#C8C8C8' }}>REGISTER FROM WEB</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </Table>
+                                </thead>
+                                <tbody>
+                                    {tableData.map((row, index) => (
+                                        <tr key={index}>
+                                            <td>
+                                                {editMode && (
+                                                    <Button
+                                                        variant="danger"
+                                                        size="sm"
+                                                        onClick={() => deleteRow(index)}
+                                                    >
+                                                        Delete
+                                                    </Button>
+                                                )}
+                                            </td>
+                                            <td className='pt-4'>
+                                                {editMode ? (
+                                                    <ReactQuill
+                                                        theme="snow"
+                                                        value={row.description}
+                                                        onChange={(value) => handleInputChange(index, 'description', value)}
+                                                    />
+                                                ) : (
+                                                    <div dangerouslySetInnerHTML={{ __html: row.description }} />
+                                                )}
+                                            </td>
+                                            <td className='text-center pt-4' style={{ background: '#D4D4D4' }}>
+                                                {editMode ? (
+                                                    <Form.Control
+                                                        type="text"
+                                                        value={row.mobile}
+                                                        onChange={(e) => handleInputChange(index, 'mobile', e.target.value)}
+                                                    />
+                                                ) : (
+                                                    row.mobile
+                                                )}
+                                            </td>
+                                            <td className='text-center pt-4'>
+                                                {editMode ? (
+                                                    <Form.Control
+                                                        type="text"
+                                                        value={row.web}
+                                                        onChange={(e) => handleInputChange(index, 'web', e.target.value)}
+                                                    />
+                                                ) : (
+                                                    row.web
+                                                )}
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                        )
+                        }
                     </Container>
                     {localStorage.getItem('Auth') === 'true' && (
                         <>
@@ -195,63 +209,72 @@ export default function Registration() {
                         </>
                     )}
                 </Row>
-                {/* Download the App Section with Pen Icon */}
-                <Row className='text-center pt-4'>
-                    <span className='text-black-50'>Download the App</span>
-                </Row>
-                {/* App Store and Play Store Icons */}
-                <Row className='w-100 d-flex justify-content-center pt-4'>
-                    <Col sm={2}></Col>
-                    <Col
-                        sm={6}
-                        className="d-flex justify-content-center align-items-center mb-3 mb-sm-0 "
-                        style={{ textAlign: 'center' }} // Ensures the content is centered even if flex doesn't apply in certain cases
-                    >
-                        {showAppStore && (
-                            <img
-                                onClick={() => window.open(Regdata.appStoreUrl, '_blank')}
-                                src={appstoreIcon}
-                                alt="AppStore"
-                                style={{ width: '150px', height: '100%', marginRight: '10px' }} // Optional: Adds space between images
-                            />
-                        )}
-                        {showPlayStore && (
-                            <img
-                                onClick={() => window.open(Regdata.playStoreUrl, '_blank')}
-                                src={googleplayIcon}
-                                alt="PlayStore"
-                                style={{ width: '150px' }}
-                            />
-                        )}
-                    </Col>
-                    <Col
-                        sm={2}
-                        className="d-flex justify-content-sm-end justify-content-center align-items-center"
-                        style={{ textAlign: 'center' }} // Optional: Keeps the text centered on mobile if needed
-                    >
-                        <span className='register-pg'>
-                            {Regdata.PaymentRegLink ? (
-                                <a
-                                    href={Regdata.PaymentRegLink}
-                                    target='_blank'
-                                    rel="noreferrer"
-                                    className='Feature-reg-btn btn'
-                                    style={{ position: 'relative', right: '0', marginTop: '-25px' }} // Adjusted to be relative, so it aligns properly
-                                >
-                                    REGISTER
-                                </a>
-                            ) : (
-                                <Link
-                                    to="/Verification"
-                                    className='Feature-reg-btn btn'
-                                    style={{ position: 'relative', right: '0' }}
-                                >
-                                    REGISTER
-                                </Link>
+                {loading ? (
+                    <Skeleton count={5} /> // Show a sketch loader with 5 lines
+                ) : (
+                    // Download the App Section with Pen Icon 
+                    <Row className='text-center pt-4'>
+                        <span className='text-black-50'>Download the App</span>
+                    </Row>
+                )
+                }
+                {loading ? (
+                    <Skeleton count={5} /> // Show a sketch loader with 5 lines
+                ) : (
+                    // Download the App Section with Pen Icon
+                    <Row className='w-100 d-flex justify-content-center pt-4'>
+                        <Col sm={2}></Col>
+                        <Col
+                            sm={6}
+                            className="d-flex justify-content-center align-items-center mb-3 mb-sm-0 "
+                            style={{ textAlign: 'center' }} // Ensures the content is centered even if flex doesn't apply in certain cases
+                        >
+                            {showAppStore && (
+                                <img
+                                    onClick={() => window.open(Regdata.appStoreUrl, '_blank')}
+                                    src={appstoreIcon}
+                                    alt="AppStore"
+                                    style={{ width: '150px', height: '100%', marginRight: '10px' }} // Optional: Adds space between images
+                                />
                             )}
-                        </span>
-                    </Col>
-                </Row>
+                            {showPlayStore && (
+                                <img
+                                    onClick={() => window.open(Regdata.playStoreUrl, '_blank')}
+                                    src={googleplayIcon}
+                                    alt="PlayStore"
+                                    style={{ width: '150px' }}
+                                />
+                            )}
+                        </Col>
+                        <Col
+                            sm={2}
+                            className="d-flex justify-content-sm-end justify-content-center align-items-center"
+                            style={{ textAlign: 'center' }} // Optional: Keeps the text centered on mobile if needed
+                        >
+                            <span className='register-pg'>
+                                {Regdata.PaymentRegLink ? (
+                                    <a
+                                        href={Regdata.PaymentRegLink}
+                                        target='_blank'
+                                        rel="noreferrer"
+                                        className='Feature-reg-btn btn'
+                                        style={{ position: 'relative', right: '0', marginTop: '-25px' }} // Adjusted to be relative, so it aligns properly
+                                    >
+                                        REGISTER
+                                    </a>
+                                ) : (
+                                    <Link
+                                        to="/Verification"
+                                        className='Feature-reg-btn btn'
+                                        style={{ position: 'relative', right: '0' }}
+                                    >
+                                        REGISTER
+                                    </Link>
+                                )}
+                            </span>
+                        </Col>
+                    </Row>
+                )}
                 <Col className='pb-4 mb-4 mt-4'>
                 </Col>
             </Container>

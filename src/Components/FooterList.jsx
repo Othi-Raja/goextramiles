@@ -24,15 +24,16 @@ export default function FooterList() {
     }, []);
     return (
         <div id='footer'>
-            <Container>
+            <Container className='footer-container' >
+
                 <Row>
-                    <Col>
+                    <Col sm={3}>
                         <Navbar.Brand href="#home" className="d-flex align-items-center">
                             <img src={appLogo} alt="img" width={'185px'} className="me-2 custm-margin-footerlist" style={{ cursor: 'default' }} />
                         </Navbar.Brand>
                     </Col>
                     {/* Footer Items Display */}
-                    <Col className='z-2'>
+                    <Col className='z-2'  >
                         <ul className='footer-subtitle-list'>
                             <li><span className='footer-title'>{Footerlistdata?.Footeritem1?.Heading}</span></li>
                             <li>
@@ -64,7 +65,7 @@ export default function FooterList() {
                             </li>
                         </ul>
                     </Col>
-                    <Col className='z-2'>
+                    <Col className='z-2'  >
                         <ul className='footer-subtitle-list'>
                             <li><span className='footer-title'>{Footerlistdata?.FooterItem2?.Heading}</span></li>
                             <li>
@@ -105,7 +106,7 @@ export default function FooterList() {
                             </li>
                         </ul>
                     </Col>
-                    <Col className='z-2'>
+                    <Col className='z-2'sm={2} >
                         <ul className='footer-subtitle-list'>
                             <li>
                                 <span className='footer-title'>{Footerlistdata?.Footeritem3?.Heading}</span>
