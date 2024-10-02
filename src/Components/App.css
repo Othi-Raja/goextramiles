@@ -99,6 +99,36 @@
   align-items: center;
   height: 80%;
 }
+.register-button{
+  font-weight: 500;
+  background-color: #456aff;
+ 
+}
+.Registration-card-style {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.Registration-para{
+  color: rgb(107, 107, 107);
+}
+.Registration-para::first-letter {
+  text-transform: uppercase; /* Capitalizes just the first letter */
+}
+.Registration-title::first-letter {
+  text-transform: uppercase; /* Capitalizes just the first letter */
+}
+
+
+.Registration-card-style:hover {
+  transform: scale(1.05);
+  background-color: #d8fad4;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.056); /* Optional: adds a shadow effect */
+}
+
+.register-button-1{
+  position: absolute;
+  top: 90%;
+  left: 25%;
+}
 #footer {
   background-color: black;
   color: white;

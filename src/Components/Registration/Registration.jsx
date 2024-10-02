@@ -1,106 +1,177 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Table, Button, Form, Col, Modal } from 'react-bootstrap';
+import { Container, Row, Button, Modal, Form } from 'react-bootstrap';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { firestoreDb } from '../firebaseConfig'; // Firestore configuration
-import { Link, useNavigate } from 'react-router-dom';
-import ReactQuill from 'react-quill'; // Quill Text Editor
-import 'react-quill/dist/quill.snow.css'; // Quill CSS
-import '../App.css'; // Custom CSS if needed.
-import '../Policys/policy.css';
-import appstoreIcon from '../assets/appstore_icon.png';
-import googleplayIcon from '../assets/googleplay_icon.png';
+import { firestoreDb } from '../firebaseConfig';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import { useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import trashBtn from '../assets/trash.svg';
+import editIcon from '../assets/pencil-square.svg';
+import playstoreIcon from '../assets/google-play.svg';
+import AppStoreIcon from '../assets/app-store.svg';
+import '../App.css';
 export default function Registration() {
-    const navigate = useNavigate();
-    const [Regdata, setRegData] = useState({});
-    const [editMode, setEditMode] = useState(false); // Toggle edit mode
-    const [tableData, setTableData] = useState([]);
-    const [showModal, setShowModal] = useState(false); // Show modal for editing URLs
-    const [appStoreUrl, setAppStoreUrl] = useState('');
+    const [Regdata, setRegData] = useState({ cards: [] });
     const [loading, setLoading] = useState(true);
-    const [PaymentRegLink, setPaymentRegLinkUrl] = useState('');
-    const [playStoreUrl, setPlayStoreUrl] = useState('');
-    const [showAppStore, setShowAppStore] = useState(true); // Toggle AppStore URL visibility
-    const [showPlayStore, setShowPlayStore] = useState(true); // Toggle PlayStore URL visibility
-    // Fetch data from Firestore
+    const [newBannerImg, setNewBannerImg] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [showCardModal, setShowCardModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false); // State for delete confirmation modal
+    const [currentCardIndex, setCurrentCardIndex] = useState(null);
+    const [newCardData, setNewCardData] = useState({
+        logo: '',
+        title: '',
+        paragraph: '',
+        buttonLabel: '',
+        buttonLink: '',
+        appstoreUrl: '',
+        playstoreUrl: ''
+    });
+    const navigate = useNavigate();
     const fetchData = async () => {
         const docRef = doc(firestoreDb, 'EPlans', 'Plans');
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            setTableData(docSnap.data().plansData || []);
-            setRegData(docSnap.data());
-            setAppStoreUrl(docSnap.data().appStoreUrl || '');
-            setPaymentRegLinkUrl(docSnap.data().PaymentRegLink || '');
-            setPlayStoreUrl(docSnap.data().playStoreUrl || '');
-            setShowAppStore(docSnap.data().showAppStore !== false); // Default to true if not present
-            setShowPlayStore(docSnap.data().showPlayStore !== false); // Default to true if not present
+            const data = docSnap.data();
+            setRegData({
+                bannerImg: data.bannerImg || '',
+                cards: data.cards || []
+            });
         } else {
             console.error("No such document!");
         }
-        setLoading(false); // Set loading to false after data is fetched
+        setLoading(false);
     };
     useEffect(() => {
         fetchData();
     }, []);
-    // Function to handle close button click
     const handleClose = () => {
         navigate('/');
     };
-    // Handle edit button toggle
-    const handleEdit = () => {
-        setEditMode(!editMode);
+    const handleModalShow = () => {
+        setNewBannerImg(Regdata.bannerImg || '');
+        setShowModal(true);
     };
-    // Handle table input change
-    const handleInputChange = (index, field, value) => {
-        const newTableData = [...tableData];
-        newTableData[index][field] = value;
-        setTableData(newTableData);
-    };
-    // Add a new row
-    const addRow = () => {
-        setTableData([...tableData, { description: '', mobile: '', web: '' }]);
-    };
-    // Delete a row
-    const deleteRow = (index) => {
-        const newTableData = [...tableData];
-        newTableData.splice(index, 1);
-        setTableData(newTableData);
-    };
-    // Save data to Firestore
-    const saveData = async () => {
+    const handleModalClose = () => setShowModal(false);
+    const saveBannerImage = async () => {
         const docRef = doc(firestoreDb, 'EPlans', 'Plans');
         try {
-            await updateDoc(docRef, {
-                plansData: tableData,
-                appStoreUrl,
-                playStoreUrl,
-                showAppStore,
-                showPlayStore,
-                PaymentRegLink
-            });
-            console.log("Document successfully updated!");
+            await updateDoc(docRef, { bannerImg: newBannerImg });
+            setRegData((prevData) => ({ ...prevData, bannerImg: newBannerImg }));
             handleModalClose();
         } catch (error) {
             console.error("Error updating document: ", error);
         }
-        // Exit edit mode after saving
     };
-    const handleModalShow = () => setShowModal(true);
-    const handleModalClose = () => setShowModal(false);
-    // console.log(Regdata);
+    const handleCardModalShow = (index = null) => {
+        setCurrentCardIndex(index);
+        if (index !== null) {
+            const cardData = Regdata.cards[index];
+            setNewCardData(cardData);
+        } else {
+            setNewCardData({
+                logo: '',
+                title: '',
+                paragraph: '',
+                buttonLabel: '',
+                buttonLink: '',
+                appstoreUrl: '',
+                playstoreUrl: ''
+            });
+        }
+        setShowCardModal(true);
+    };
+    const handleCardModalClose = () => setShowCardModal(false);
+    const saveCardData = async () => {
+        const updatedCards = Array.isArray(Regdata.cards) ? [...Regdata.cards] : [];
+        if (currentCardIndex !== null) {
+            updatedCards[currentCardIndex] = newCardData; // Update existing card
+        } else {
+            updatedCards.push(newCardData); // Add new card
+        }
+        const docRef = doc(firestoreDb, 'EPlans', 'Plans');
+        try {
+            await updateDoc(docRef, { cards: updatedCards });
+            setRegData((prevData) => ({ ...prevData, cards: updatedCards }));
+            handleCardModalClose();
+        } catch (error) {
+            console.error("Error updating document: ", error);
+        }
+    };
+    const handleDeleteCardShow = (index) => {
+        setCurrentCardIndex(index);
+        setShowDeleteModal(true);
+    };
+    const handleDeleteModalClose = () => setShowDeleteModal(false);
+    const deleteCardData = async () => {
+        const updatedCards = [...Regdata.cards];
+        updatedCards.splice(currentCardIndex, 1); // Remove the card at the specified index
+        const docRef = doc(firestoreDb, 'EPlans', 'Plans');
+        try {
+            await updateDoc(docRef, { cards: updatedCards });
+            setRegData((prevData) => ({ ...prevData, cards: updatedCards }));
+            handleDeleteModalClose();
+        } catch (error) {
+            console.error("Error deleting document: ", error);
+        }
+    };
+    const handleCardDataChange = (key, value) => {
+        setNewCardData((prevData) => {
+            if (prevData[key] !== value) {
+                return { ...prevData, [key]: value };
+            }
+            return prevData;
+        });
+    };
+    const modules = {
+        toolbar: [
+            [{ 'header': '1' }, { 'header': '2' }, { 'header': '3' }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            ['bold', 'italic', 'underline'],
+            [{ 'lineheight': ['1', '1.5', '2', '2.5', '3'] }],
+            ['link'],
+            [{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' }, { 'align': 'justify' }],
+            ['clean']
+        ],
+        clipboard: { matchVisual: false }
+    };
+    const formats = [
+        'header', 'font',
+        'list', 'bullet',
+        'bold', 'italic', 'underline',
+        'link',
+        'align',
+        'color', 'background'
+    ];
+    const [deviceType, setDeviceType] = useState('');
+    // useEffect(() => {
+    //   const getDeviceType = () => {
+    //     const userAgent = navigator.userAgent;
+    //     if (/android/i.test(userAgent)) {
+    //       setDeviceType('Android');
+    //     } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    //       setDeviceType('iPhone/iPad');
+    //     } else if (window.innerWidth <= 768) {
+    //       setDeviceType('Mobile');
+    //     } else {
+    //       setDeviceType('Laptop/Desktop');
+    //     }
+    //   };
+    //   getDeviceType();
+    // }, []);
     return (
         <>
             <Container fluid className="position-relative">
                 <Row className="justify-content-center mt-3">
                     {loading ? (
-                        <Skeleton count={5} /> // Show a sketch loader with 5 lines
+                        <Skeleton count={5} />
                     ) : (
-                        // Responsive banner with close button inside 
                         <div className="position-relative">
                             <button
                                 type="button"
-                                className="btn-close btn-close-white position-absolute border-0 shadow-none "
+                                className="btn-close btn-close-white position-absolute border-0 shadow-none"
                                 style={{ top: '30px', left: '40px', color: 'white' }}
                                 aria-label="Close"
                                 onClick={handleClose}
@@ -111,228 +182,193 @@ export default function Registration() {
                                 style={{ width: '100%', maxHeight: '400px', objectFit: 'cover' }}
                                 className="img-fluid img-thumbnail"
                             />
-                        </div>
-                    )
-                    }
-                    {/* Editable Table */}
-                    <Container>
-                        {loading ? (
-                            <Skeleton count={5} /> // Show a sketch loader with 5 lines
-                        ) : (
-                            <Table className='mt-3'>
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th className='bg-black text-white text-center' style={{ fontWeight: '500' }}>REGISTER FROM MOBILE</th>
-                                        <th className='text-center text-gray' style={{ fontWeight: '500', background: '#C8C8C8' }}>REGISTER FROM WEB</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {tableData.map((row, index) => (
-                                        <tr key={index}>
-                                            <td>
-                                                {editMode && (
-                                                    <Button
-                                                        variant="danger"
-                                                        size="sm"
-                                                        onClick={() => deleteRow(index)}
-                                                    >
-                                                        Delete
-                                                    </Button>
-                                                )}
-                                            </td>
-                                            <td className='pt-4'>
-                                                {editMode ? (
-                                                    <ReactQuill
-                                                        theme="snow"
-                                                        value={row.description}
-                                                        onChange={(value) => handleInputChange(index, 'description', value)}
-                                                    />
-                                                ) : (
-                                                    <div dangerouslySetInnerHTML={{ __html: row.description }} />
-                                                )}
-                                            </td>
-                                            <td className='text-center pt-4' style={{ background: '#D4D4D4' }}>
-                                                {editMode ? (
-                                                    <Form.Control
-                                                        type="text"
-                                                        value={row.mobile}
-                                                        onChange={(e) => handleInputChange(index, 'mobile', e.target.value)}
-                                                    />
-                                                ) : (
-                                                    row.mobile
-                                                )}
-                                            </td>
-                                            <td className='text-center pt-4'>
-                                                {editMode ? (
-                                                    <Form.Control
-                                                        type="text"
-                                                        value={row.web}
-                                                        onChange={(e) => handleInputChange(index, 'web', e.target.value)}
-                                                    />
-                                                ) : (
-                                                    row.web
-                                                )}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                        )
-                        }
-                    </Container>
-                    {localStorage.getItem('Auth') === 'true' && (
-                        <>
-                            <>
-                                <Col style={{ display: editMode ? 'none' : 'block' }}>
-                                    <Button variant="primary" className='px-5' onClick={handleEdit}>
-                                        {editMode ? 'Save Changes' : 'Edit'}
-                                    </Button>
-                                </Col>
-                            </>
-                            {editMode && (
-                                <>
-                                    <Col>
-                                        <Button variant="success" onClick={saveData} className="mx-3">
-                                            Save Changes
-                                        </Button>
-                                        <Button variant="secondary" onClick={addRow}>
-                                            Add Row
-                                        </Button>
-                                        <Button variant="secondary" className="px-3 ms-2 btn" onClick={handleModalShow}>
-                                            Edit Apps
-                                        </Button>
-                                    </Col>
-                                </>
+                            {localStorage.getItem('Auth') === 'true' && (
+                                <Button
+                                    variant="secondary"
+                                    className="btn"
+                                    onClick={handleModalShow}
+                                >
+                                    Edit Banner
+                                </Button>
                             )}
-                        </>
+                        </div>
                     )}
                 </Row>
-                {loading ? (
-                    <Skeleton count={5} /> // Show a sketch loader with 5 lines
-                ) : (
-                    // Download the App Section with Pen Icon 
-                    <Row className='text-center pt-4'>
-                        <span className='text-black-50'>Download the App</span>
-                    </Row>
-                )
-                }
-                {loading ? (
-                    <Skeleton count={5} /> // Show a sketch loader with 5 lines
-                ) : (
-                    // Download the App Section with Pen Icon
-                    <Row className='w-100 d-flex justify-content-center pt-4'>
-                        <Col sm={2}></Col>
-                        <Col
-                            sm={6}
-                            className="d-flex justify-content-center align-items-center mb-3 mb-sm-0 "
-                            style={{ textAlign: 'center' }} // Ensures the content is centered even if flex doesn't apply in certain cases
-                        >
-                            {showAppStore && (
-                                <img
-                                    onClick={() => window.open(Regdata.appStoreUrl, '_blank')}
-                                    src={appstoreIcon}
-                                    alt="AppStore"
-                                    style={{ width: '150px', height: '100%', marginRight: '10px' }} // Optional: Adds space between images
-                                />
+                <Container className='mb-5'>
+                    <Row className="mt-3 w-100">
+                        <div className='w-100 h-auto d-flex justify-content-center align-items-start flex-wrap'>
+                            {Regdata.cards && Regdata.cards.map((card, index) => (
+                                <div key={index} className="card m-2 border-0 Registration-card-style" style={{ width: '18rem', height: 'auto' }}>
+                                    <div className='text-center'>
+                                        <img src={card.logo} className="card-img-top pt-2" alt="Logo" style={{ width: '100px' }} />
+                                    </div>
+                                    <div className="card-body d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h5 className="card-title Registration-title" dangerouslySetInnerHTML={{ __html: card.title }} />
+                                            <p className="card-text Registration-para" dangerouslySetInnerHTML={{ __html: card.paragraph }} />
+                                        </div>
+                                        {card.buttonLabel?.length > 0 && (
+                                            <div className='text-center mb-3'>
+                                                <a href={card.buttonLink} className="btn btn-primary px-5 register-button" style={{ paddingLeft: '30px' }}>{card.buttonLabel}</a>
+                                            </div>
+                                        )}
+                                        <div className='text-center'>
+                                            {card.playstoreUrl?.length > 0 && (
+                                                <a href={card.playstoreUrl} className="me-2"><img src={playstoreIcon} alt="Play Store Icon" width={20} /></a>
+                                            )}
+                                            {card.appstoreUrl?.length > 0 && (
+                                                <a href={card.appstoreUrl} ><img src={AppStoreIcon} alt="App Store Icon" width={20} /></a>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className='position-absolute' style={{ top: '10px', right: '10px' }}>
+                                        {localStorage.getItem('Auth') === 'true' && (
+                                            <>
+                                                <Button variant="link" onClick={() => handleCardModalShow(index)}>
+                                                    <img src={editIcon} alt="Edit icon" />
+                                                </Button>
+                                                <Button variant="link" onClick={() => handleDeleteCardShow(index)}>
+                                                    <img src={trashBtn} alt='Delete icon' />
+                                                </Button>
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                            {localStorage.getItem('Auth') === 'true' && (
+                                <div className="card m-2 d-flex justify-content-center text-center align-content-center" onClick={() => handleCardModalShow()} style={{ width: '18rem', height: '350px', cursor: 'pointer' }}>
+                                    <span style={{ fontSize: '150px', opacity: '.2', fontWeight: '100' }}>+</span>
+                                </div>
                             )}
-                            {showPlayStore && (
-                                <img
-                                    onClick={() => window.open(Regdata.playStoreUrl, '_blank')}
-                                    src={googleplayIcon}
-                                    alt="PlayStore"
-                                    style={{ width: '150px' }}
-                                />
-                            )}
-                        </Col>
-                        <Col
-                            sm={2}
-                            className="d-flex justify-content-sm-end justify-content-center align-items-center"
-                            style={{ textAlign: 'center' }} // Optional: Keeps the text centered on mobile if needed
-                        >
-                            <span className='register-pg'>
-                                {Regdata.PaymentRegLink ? (
-                                    <a
-                                        href={Regdata.PaymentRegLink}
-                                        target='_blank'
-                                        rel="noreferrer"
-                                        className='Feature-reg-btn btn'
-                                        style={{ position: 'relative', right: '0', marginTop: '-25px' }} // Adjusted to be relative, so it aligns properly
-                                    >
-                                        REGISTER
-                                    </a>
-                                ) : (
-                                    <Link
-                                        to="/Verification"
-                                        className='Feature-reg-btn btn'
-                                        style={{ position: 'relative', right: '0' }}
-                                    >
-                                        REGISTER
-                                    </Link>
-                                )}
-                            </span>
-                        </Col>
+                        </div>
                     </Row>
-                )}
-                <Col className='pb-4 mb-4 mt-4'>
-                </Col>
+                </Container>
+                {/* <h1>Device Type: {deviceType}</h1> */}
             </Container>
-            {/* Modal for Editing URLs */}
-            <Modal show={showModal} onHide={handleModalClose} size="lg" dialogClassName='modal-fullscreen'>
+            {/* Modal for editing banner image */}
+            <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>AppStore and PlayStore</Modal.Title>
+                    <Modal.Title className='text-black-50'>Banner Image</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form.Group controlId="appStoreUrl">
-                        <Form.Label>AppStore URL</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={appStoreUrl}
-                            onChange={(e) => setAppStoreUrl(e.target.value)}
-                        />
-                    </Form.Group>
-                    <Form.Group controlId="playStoreUrl" className="mt-3">
-                        <Form.Label>PlayStore URL</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={playStoreUrl}
-                            onChange={(e) => setPlayStoreUrl(e.target.value)}
-                        />
-                    </Form.Group>
-                    {/* Toggle Buttons for Showing/Hiding URLs */}
-                    <Form.Group controlId="showAppStore" className="mt-3">
-                        <Form.Check
-                            type="switch"
-                            label="Show AppStore"
-                            checked={showAppStore}
-                            onChange={() => setShowAppStore(!showAppStore)}
-                        />
-                    </Form.Group>
-                    <Form.Group controlId="showPlayStore" className="mt-3">
-                        <Form.Check
-                            type="switch"
-                            label="Show PlayStore"
-                            checked={showPlayStore}
-                            onChange={() => setShowPlayStore(!showPlayStore)}
-                        />
-                    </Form.Group>
-                    <Modal.Title className='pt-4'>Registration Link</Modal.Title>
-                    <Form.Group controlId="playStoreUrl" className="mt-3">
-                        <Form.Label>PlayStore URL</Form.Label>
-                        <Form.Control
-                            type="text"
-                            value={PaymentRegLink}
-                            onChange={(e) => setPaymentRegLinkUrl(e.target.value)}
-                        />
-                    </Form.Group>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Enter Image URL</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newBannerImg}
+                                onChange={(e) => setNewBannerImg(e.target.value)}
+                                placeholder="Enter image URL"
+                            />
+                        </Form.Group>
+                    </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleModalClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={saveData}>
+                    <Button variant="primary" onClick={saveBannerImage}>
                         Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            {/* Modal for editing card data */}
+            <Modal show={showCardModal} onHide={handleCardModalClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title className='text-black-50'>Edit Card</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Form>
+                        <Form.Group>
+                            <Form.Label>Logo URL</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newCardData.logo}
+                                onChange={(e) => handleCardDataChange('logo', e.target.value)}
+                                placeholder="Enter logo URL"
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Title</Form.Label>
+                            <ReactQuill
+                                theme="snow"
+                                modules={modules}
+                                formats={formats}
+                                value={newCardData.title}
+                                onChange={(value) => handleCardDataChange('title', value)}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Paragraph</Form.Label>
+                            <ReactQuill
+                                theme="snow"
+                                modules={modules}
+                                formats={formats}
+                                value={newCardData.paragraph}
+                                onChange={(value) => handleCardDataChange('paragraph', value)}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Button Label</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newCardData.buttonLabel}
+                                onChange={(e) => handleCardDataChange('buttonLabel', e.target.value)}
+                                placeholder="Enter button label"
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Button Link</Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newCardData.buttonLink}
+                                onChange={(e) => handleCardDataChange('buttonLink', e.target.value)}
+                                placeholder="Enter button link"
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label className='pt-3'><img src={playstoreIcon} width={25} alt='playstoreIcon' /></Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newCardData.playstoreUrl}
+                                onChange={(e) => handleCardDataChange('playstoreUrl', e.target.value)}
+                                placeholder="Enter PlayStore Url"
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Label className='pt-3'><img src={AppStoreIcon} width={25} alt='AppStoreIcon' /></Form.Label>
+                            <Form.Control
+                                type="text"
+                                value={newCardData.appstoreUrl}
+                                onChange={(e) => handleCardDataChange('appstoreUrl', e.target.value)}
+                                placeholder="Enter AppStore Url"
+                            />
+                        </Form.Group>
+                    </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCardModalClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={saveCardData}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            {/* Modal for delete confirmation */}
+            <Modal show={showDeleteModal} onHide={handleDeleteModalClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title className='text-danger'>Confirm Deletion</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Are you sure you want to delete this card ? This action cannot be undone.</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleDeleteModalClose}>
+                        Cancel
+                    </Button>
+                    <Button variant="danger" onClick={deleteCardData}>
+                        Delete
                     </Button>
                 </Modal.Footer>
             </Modal>

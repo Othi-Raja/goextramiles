@@ -46,14 +46,14 @@ function App() {
           height: '100vh'
         }}>
           <Nav />
-          <div className='w-100 h-100 position-absolute text-center home-text-align'>
+          <div className='w-100  position-absolute text-center home-text-align' style={{cursor:'pointer' ,height:'60%'}} onClick={()=> window.open(Homedata.RegistrationLink,'_blank')}>
             <div className="main-title">
               {Homedata.Txt1}
             </div>
             <div className="main-subtitle">
               <span>{Homedata.Txt2}</span>
             </div>
-            {loading ? (
+            {/* {loading ? (
               <Skeleton count={10} height={50} />
             ) : (
               <div className="mt-4" style={{ display: Homedata.RegistrationItem?.length === 0 ? 'none' : 'block' }}>
@@ -62,12 +62,12 @@ function App() {
                     {Homedata.RegistrationItem}
                   </a>
                 ) : (
-                  <Link to="/Registor" target='_blank' className='registor-btn'>
+                  <Link to="/Registration" target='_blank' className='registor-btn'>
                     {Homedata.RegistrationItem}
                   </Link>
                 )}
               </div>
-            )}
+            )} */}
           </div>
           {/* Always show the Routes */}
           <Routes>

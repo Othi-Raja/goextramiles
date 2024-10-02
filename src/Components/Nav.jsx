@@ -17,6 +17,8 @@ import Backdrop from '@mui/material/Backdrop';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import Switch from 'react-switch';
+import { Link } from 'react-router-dom';
+
 // fetch Footer data
 const fetchfooterContent = async () => {
   try {
@@ -66,7 +68,7 @@ export default function MyNavBar() {
   const [editableHomeData, seteditableHomeData] = useState({
     Txt1: '',
     Txt2: '',
-    RegistrationItem: '',
+    // RegistrationItem: '',
     BgImg: '', // Default value for BgImg
     RegistrationLink: ''
   });
@@ -348,7 +350,7 @@ export default function MyNavBar() {
           {/* <Navbar.Toggle aria-controls="basic-navbar-nav" className='toggle-btn outline-none border-0 shadow-none' />
         <Navbar.Collapse id="basic-navbar-nav"> */}
           <Nav className="ms-auto">
-            <Nav.Link href="#">For Sponsorship</Nav.Link>
+            <Link to='/ForBusiness'  target='_blank' className='px-2' style={{textDecoration:'none' ,color:'black', fontWeight:'500',fontSize:'18px'}}> For Business</Link>
           </Nav>
           {/* </Navbar.Collapse> */}
           {
@@ -404,7 +406,7 @@ export default function MyNavBar() {
                     </Col>
                   </Row>
                   <Row>
-                    <Col md={6}>
+                    {/* <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Registration Item</Form.Label>
                         <Form.Control
@@ -415,7 +417,7 @@ export default function MyNavBar() {
                           placeholder="Enter registration item"
                         />
                       </Form.Group>
-                    </Col>
+                    </Col> */}
                     <Col md={6}>
                       <Form.Group className="mb-3">
                         <Form.Label>Background Image URL (BgImg)</Form.Label>
@@ -502,6 +504,12 @@ export default function MyNavBar() {
                       className='mt-2 border-2 outline-none shadow-none'
                       value={FooterformData?.FooterItem2?.SubTitle3 || ''}
                       onChange={(e) => handlefooterListInputChange(e, 'FooterItem2', 'SubTitle3')}
+                    />
+                         <Form.Control
+                      type="text"
+                      className='mt-2 border-2 outline-none shadow-none'
+                      value={FooterformData?.FooterItem2?.SubTitle4 || ''}
+                      onChange={(e) => handlefooterListInputChange(e, 'FooterItem2', 'SubTitle4')}
                     />
                   </Form.Group>
                 </Col>

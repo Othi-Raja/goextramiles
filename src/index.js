@@ -19,7 +19,7 @@ import ReleaseNotes from './Components/FooterList/ReleaseNotes';
 import Business from './Components/FooterList/ForBusiness'; 
 import Community from './Components/FooterList/Community';
 import HelpVideos from './Components/FooterList/HelpVideos';
-import Registor from './Components/Registration/Registration';
+import Registration from './Components/Registration/Registration';
 import Verification from './Components/Registration/Verification'
 const App = () => {
   const location = useLocation();
@@ -33,7 +33,7 @@ const App = () => {
   const isPrivacyRoute = location.pathname === '/Privacy';
   const isReleaseNotesRoute = location.pathname === '/ReleaseNotes';
   const isHelpVideosRoute = location.pathname === '/HelpVideos';
-  const isRegistorRoute = location.pathname === '/Registor';
+  const isRegistrationRoute = location.pathname === '/Registration';
   const isVerificationRoute = location.pathname === '/Verification';
   return (
     <>
@@ -52,9 +52,9 @@ const App = () => {
         <>
         <Features/>
          </>
-      ):isRegistorRoute ? (
+      ):isRegistrationRoute ? (
         <>
-        <Registor/>
+        <Registration/>
          </>
       ):isVerificationRoute ? (
         <>

@@ -23,7 +23,7 @@ export default function FooterList() {
         fetchData();
     }, []);
     return (
-        <div id='footer'>
+        <div id='footer' style={{zIndex:'9999'}}>
             <Container className='footer-container' >
 
                 <Row>
@@ -113,7 +113,7 @@ export default function FooterList() {
                             </li>
                             <li>
                                 {Footerlistdata?.Footeritem3?.AndroidUrl ? (
-                                    <a href={Footerlistdata?.Footeritem3?.AndroidUrl} target='_blank' className='text-white-50'>
+                                    <a href={Footerlistdata?.Footeritem3?.AndroidUrl} target='_blank' rel="noreferrer" className='text-white-50'>
                                         {Footerlistdata?.Footeritem3?.SubTitle1}
                                     </a>
                                 ) : (
@@ -122,7 +122,7 @@ export default function FooterList() {
                             </li>
                             <li>
                                 {Footerlistdata?.Footeritem3?.IOSUrl ? (
-                                    <a href={Footerlistdata?.Footeritem3?.IOSUrl} target='_blank' className='text-white-50'>
+                                    <a href={Footerlistdata?.Footeritem3?.IOSUrl} target='_blank' rel="noreferrer" className='text-white-50'>
                                         {Footerlistdata?.Footeritem3?.SubTitle2}
                                     </a>
                                 ) : (
