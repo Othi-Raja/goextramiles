@@ -9,8 +9,8 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import trashBtn from '../assets/trash.svg';
 import editIcon from '../assets/pencil-square.svg';
-import playstoreIcon from '../assets/google-play.svg';
-import AppStoreIcon from '../assets/app-store.svg';
+import playstoreIcon from '../assets/playstore_black.png';
+import AppStoreIcon from '../assets/appstore_blackk.svg';
 import '../App.css';
 export default function Registration() {
     const [Regdata, setRegData] = useState({ cards: [] });
@@ -198,11 +198,11 @@ export default function Registration() {
                     <Row className="mt-3 w-100">
                         <div className='w-100 h-auto d-flex justify-content-center align-items-start flex-wrap'>
                             {Regdata.cards && Regdata.cards.map((card, index) => (
-                                <div key={index} className="card m-2 border-0 Registration-card-style" style={{ width: '18rem', height: 'auto' }}>
+                                <div key={index} className="card m-2 border-0 Registration-card-style  mt-3" style={{ width: '18rem', height: 'auto' }}>
                                     <div className='text-center'>
                                         <img src={card.logo} className="card-img-top pt-2" alt="Logo" style={{ width: '100px' }} />
                                     </div>
-                                    <div className="card-body d-flex flex-column justify-content-between">
+                                    <div className="card-body d-flex flex-column justify-content-between ">
                                         <div>
                                             <h5 className="card-title Registration-title" dangerouslySetInnerHTML={{ __html: card.title }} />
                                             <p className="card-text Registration-para" dangerouslySetInnerHTML={{ __html: card.paragraph }} />
@@ -214,10 +214,10 @@ export default function Registration() {
                                         )}
                                         <div className='text-center'>
                                             {card.playstoreUrl?.length > 0 && (
-                                                <a href={card.playstoreUrl} className="me-2"><img src={playstoreIcon} alt="Play Store Icon" width={20} /></a>
+                                                <a href={card.playstoreUrl} className="me-2"><img src={playstoreIcon} alt="Play Store Icon" width={100} /></a>
                                             )}
                                             {card.appstoreUrl?.length > 0 && (
-                                                <a href={card.appstoreUrl} ><img src={AppStoreIcon} alt="App Store Icon" width={20} /></a>
+                                                <a href={card.appstoreUrl} ><img src={AppStoreIcon} alt="App Store Icon" width={100} /></a>
                                             )}
                                         </div>
                                     </div>
