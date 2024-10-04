@@ -187,6 +187,7 @@
     padding-top: 10px;
   }
 
+
   .Pvt-col {
     justify-content: center;
   }
@@ -211,15 +212,26 @@
     justify-content: center;
   }
 }
+@media (min-width: 991.98px) {
+  .cstm-leftAlign-feature{
+    display: flex;
+    justify-content:  start ;
+     }
+     .cstm-rightAlign-feature{
+      display: flex;
+      justify-content:  end ;
+       }
+}
 
 @media (min-width: 390px) and (max-width: 991.98px) {
   .cstm-margin-feature {
     margin-bottom: 20px;
   }
-
+  
   .register-pg {
     margin-top: 30px;
   }
+
 }
 
 @media (max-width: 576px) {
@@ -232,13 +244,14 @@
     display: flex;
     flex-wrap: wrap;
   }
+
 }
 
 @media (min-width: 320px) {
   .cstm-margin-feature {
     margin-bottom: 20px;
   }
-
+ 
   .register-pg {
     margin-top: 30px;
   }

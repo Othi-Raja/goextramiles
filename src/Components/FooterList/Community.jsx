@@ -16,6 +16,9 @@ export default function Community() {
   const [Title, setCommunityTitle] = useState('');
   const [Cpara, setCommunityPara] = useState('');
   const [Curl, setCommunityUrl] = useState('');
+  const [ButtonLabel, setCommunityButtonLabel] = useState('');
+
+
   const navigate = useNavigate();
   // Fetch data from Firestore
   const fetchData = async () => {
@@ -46,11 +49,13 @@ export default function Community() {
       Title: Title,
       Cpara: Cpara,
       Curl: Curl,
+      ButtonLabel:ButtonLabel
     });
     setCommunityData({
       Title: Title,
       Cpara: Cpara,
       Curl: Curl,
+      ButtonLabel:ButtonLabel
     });
     setShowModal(false); // Close modal after saving
   };
@@ -93,9 +98,17 @@ export default function Community() {
         ) : (
           <div className='pt-5' dangerouslySetInnerHTML={{ __html: Communitydata.Cpara }} />
         )}
-        <Row className='d-flex justify-content-center pt-5'>
-          <button className=' community-edit-btn' onClick={() => window.open(Communitydata.Curl, '_blank')}>Join</button>
-        </Row>
+ 
+        {
+          Communitydata.ButtonLabel && (
+
+            <Row className='d-flex justify-content-center pt-5'>
+              <button className=' community-edit-btn'  onClick={() => window.open(Communitydata.Curl, '_blank')}>{Communitydata.ButtonLabel}</button>
+            </Row>
+          )
+        }
+      
+
         {
           localStorage.getItem('Auth') === 'true' && (
             <Row className='text-end'>
@@ -138,6 +151,16 @@ export default function Community() {
               onChange={(e) => setCommunityUrl(e.target.value)}
             />
           </div>
+          <div className="mb-3">
+            <label>Button Label</label>
+            <input
+              type="text"
+              className="form-control"
+              value={ButtonLabel}
+              onChange={(e) => setCommunityButtonLabel(e.target.value)}
+            />
+          </div>
+          
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowModal(false)}>

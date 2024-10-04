@@ -86,6 +86,8 @@ export default function Features() {
                     const { Image, Content } = Featuredata[key];
                     const isImageLeft = index % 2 === 0;
                     return (
+                        <Container  >
+
                         <Row key={key} className='my-4 pt-4'>
                             {loading ? (
                                 <Skeleton count={5} />
@@ -93,8 +95,8 @@ export default function Features() {
                                 <>
                                     {isImageLeft ? (
                                         <>
-                                            <Col sm={12} md={4}>
-                                                <img src={Image} alt='Feature' className='img-fluid feature-Img  cstm-margin-feature' />
+                                            <Col sm={12} md={4} className=' cstm-leftAlign-feature'>
+                                                <img src={Image} alt='Feature' className='img-fluid feature-Img  cstm-margin-feature  ' />
                                             </Col>
                                             <Col sm={12} md={8}>
                                                 <div className='feature-content-controls Feature-Text' dangerouslySetInnerHTML={{ __html: Content }} />
@@ -108,8 +110,8 @@ export default function Features() {
                                         </>
                                     ) : (
                                         <>
-                                            <Col sm={12} md={4} className="order-sm-1 order-md-2">
-                                                <img src={Image} alt="Feature" className="img-fluid feature-Img cstm-margin-feature " />
+                                            <Col sm={12} md={4} className="order-sm-1 order-md-2  cstm-rightAlign-feature">
+                                                <img src={Image} alt="Feature" className="img-fluid feature-Img cstm-margin-feature   " />
                                             </Col>
                                             <Col sm={12} md={8} className=" order-sm-2 order-md-1">
                                                 <div className="feature-content-controls Feature-Text" dangerouslySetInnerHTML={{ __html: Content }} />
@@ -126,6 +128,7 @@ export default function Features() {
                             )
                             }
                         </Row>
+                        </Container>
                     );
                 })}
             </>

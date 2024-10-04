@@ -16,6 +16,8 @@ export default function Careers() {
   const [careerTitle, setCareerTitle] = useState('');
   const [careerPara, setCareerPara] = useState('');
   const [careersUrl, setCareersUrl] = useState('');
+  const [careersButtonLabel, setCareersButtonLabel] = useState('');
+
   const navigate = useNavigate();
   // Fetch data from Firestore
   const fetchData = async () => {
@@ -27,6 +29,10 @@ export default function Careers() {
       setCareerTitle(data.Title); // Set initial values for editing
       setCareerPara(data.CareerPara); // Set initial values for editing
       setCareersUrl(data.CareersUrl); // Set initial values for editing
+      setCareersUrl(data.CareersUrl); // Set initial values for editing
+      setCareersButtonLabel(data.careersButtonLabel); // Set initial values for editing
+
+
     } else {
       console.error("No such document!");
     }
@@ -46,11 +52,13 @@ export default function Careers() {
       Title: careerTitle,
       CareerPara: careerPara,
       CareersUrl: careersUrl,
+      careersButtonLabel:careersButtonLabel
     });
     setCareerData({
       Title: careerTitle,
       CareerPara: careerPara,
       CareersUrl: careersUrl,
+      careersButtonLabel:careersButtonLabel
     });
     setShowModal(false); // Close modal after saving
   };
@@ -93,15 +101,21 @@ export default function Careers() {
         ) : (
           <div className='pt-5' dangerouslySetInnerHTML={{ __html: Careerdata.CareerPara }} />
         )}
-        <Row className='d-flex justify-content-center pt-5'>
-          <button className=' career-edit-btn' onClick={() => window.open(Careerdata.CareersUrl, '_blank')}>Apply</button>
+        <Row className='d-flex justify-content-center pt-5' >
+          
+          <button className=' career-edit-btn' onClick={() => window.open(Careerdata.CareersUrl, '_blank')}>{Careerdata.careersButtonLabel}</button>
         </Row>
         {
           localStorage.getItem('Auth') === 'true' && (
             <Row className='text-end'>
+              {
+                Careerdata.careersButtonLabel && Careerdata.careersButtonLabel.length > 0 && (
+
               <Button className='border-0 shadow-none bg-transparent' onClick={() => setShowModal(true)}>
                 <img src={editIcon} alt="pen Icon" />
               </Button>
+                )
+              }
             </Row>
           )}
       </Container>
@@ -136,6 +150,15 @@ export default function Careers() {
               className="form-control"
               value={careersUrl}
               onChange={(e) => setCareersUrl(e.target.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <label>Button Label</label>
+            <input
+              type="text"
+              className="form-control"
+              value={careersButtonLabel}
+              onChange={(e) => setCareersButtonLabel(e.target.value)}
             />
           </div>
         </Modal.Body>

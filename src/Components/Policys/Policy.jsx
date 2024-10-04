@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './policy.css';
+import { useNavigate } from 'react-router-dom';
 import { collection, getDocs, firestoreDb } from '../firebaseConfig';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
@@ -12,6 +13,7 @@ import 'react-quill/dist/quill.bubble.css';
 import 'react-quill/dist/quill.core.css';
 // Fetching Terms and Conditions data
 const fetchTncItems = async () => {
+  
   try {
     const TncCollection = collection(firestoreDb, 'Policy');
     const TncSnapshot = await getDocs(TncCollection);
@@ -23,8 +25,14 @@ const fetchTncItems = async () => {
     return []; 
   } 
 };
+
 const Policy = () => {
   const [TncItems, setTncItems] = useState([]);
+  const navigate = useNavigate();
+    // Function to handle close button click
+    const handleClose = () => {
+      navigate('/');
+  };
   useEffect(() => {
     const getTncItems = async () => {
       const items = await fetchTncItems();
@@ -44,6 +52,13 @@ const Policy = () => {
         TncItems.length > 0 ? (
           TncItems.map((item, index) => (
             <div key={index}>
+                 <button
+            type="button"
+            className="btn-close btn-close-black position-absolute border-0 shadow-none"
+            style={{ left: '40px',top:'25px', color: 'black' }}
+            aria-label="Close"
+            onClick={handleClose}
+          ></button>
               <Container className=" pt-2">
                 <Row className='w-100'>
                   <div

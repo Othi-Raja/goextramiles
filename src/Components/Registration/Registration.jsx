@@ -214,10 +214,10 @@ export default function Registration() {
                                         )}
                                         <div className='text-center'>
                                             {card.playstoreUrl?.length > 0 && (
-                                                <a href={card.playstoreUrl} className="me-2"><img src={playstoreIcon} alt="Play Store Icon" width={100} /></a>
+                                                <a href={card.playstoreUrl} className="me-2" target='_blank' rel="noreferrer" ><img src={playstoreIcon} alt="Play Store Icon" width={100} /></a>
                                             )}
                                             {card.appstoreUrl?.length > 0 && (
-                                                <a href={card.appstoreUrl} ><img src={AppStoreIcon} alt="App Store Icon" width={100} /></a>
+                                                <a href={card.appstoreUrl} target='_blank' rel="noreferrer" ><img src={AppStoreIcon} alt="App Store Icon" width={100} /></a>
                                             )}
                                         </div>
                                     </div>

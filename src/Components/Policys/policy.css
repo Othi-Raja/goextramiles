@@ -2,20 +2,21 @@
   padding: 0;
   margin: 0;
   box-sizing:border-box;
+  
 }
-
+ 
 li::marker {
-    color: white;
+    color: rgb(0, 0, 0);
     display: none !important;
   }
   
   .bg-gray{
-    background-color: rgb(41, 41, 41);
-    color:white;
+    background-color: #f0f0f0 ;
+    color:black;
   }
   
   .Quill-text {
-    color: white;
+    color: black;
   }
   
   .ql-background {

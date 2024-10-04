@@ -33,6 +33,11 @@ function App() {
       window.open('/Admin', '_blank');
     }
   }, [location]);
+  const handleClick = () => {
+ 
+        window.open(Homedata.RegistrationLink, '_blank');
+    
+};
   return (
     <div className="Home" id='Home'>
       {loading ? (
@@ -46,7 +51,7 @@ function App() {
           height: '100vh'
         }}>
           <Nav />
-          <div className='w-100  position-absolute text-center home-text-align' style={{cursor:'pointer' ,height:'60%'}} onClick={()=> window.open(Homedata.RegistrationLink,'_blank')}>
+          <div className='w-100  position-absolute text-center home-text-align' style={ { cursor:Homedata.RegistrationLink.length > 0 ? 'pointer': 'default', height: '60%' }} onClick={Homedata.RegistrationLink && Homedata.RegistrationLink.length > 0 ? handleClick : undefined}>
             <div className="main-title">
               {Homedata.Txt1}
             </div>
