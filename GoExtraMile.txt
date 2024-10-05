@@ -1,0 +1,207 @@
+=======================================
+Developer Card
+=======================================
+Name: Othiraja JO
+Title:Fullstack Developer
+Location: TamilNadu
+Email: othiraja64@gmail.com
+
+LinkedIn: https://www.linkedin.com/in/othi-raja-45176b255/
+GitHub: https://github.com/Othi-Raja
+
+
+
+==================================================================
+               React Library
+==================================================================
+
++-----------------------------------------------------+----------+
+| @emotion/react                                       | 11.13.3  |
+| @emotion/styled                                      | 11.13.0  |
+| @fortawesome/free-solid-svg-icons                    | 6.6.0    |
+| @fortawesome/react-fontawesome                       | 0.2.2    |
+| @mui/material                                        | 6.1.0    |
+| @testing-library/jest-dom                            | 5.17.0   |
+| @testing-library/react                               | 13.4.0   |
+| @testing-library/user-event                          | 13.5.0   |
+| aos                                                  | 2.3.4    |
+| bootstrap                                            | 5.3.3    |
+| firebase                                             | 10.13.2  |
+| react-bootstrap                                      | 2.10.4   |
+| react-dom                                            | 18.3.1   |
+| react-loading-skeleton                               | 3.4.0    |
+| react-quill                                          | 2.0.0    |
+| react-router-dom                                     | 6.26.2   |
+| react-scripts                                        | 5.0.1    |
+| react-switch                                         | 7.0.0    |
+| react-toastify                                       | 10.0.5   |
+| react                                                | 18.3.1   |
+| web-vitals                                           | 2.1.4    |
+| zero-styled                                          | 0.2.2    |
++-----------------------------------------------------+----------+
+
+==================================================================
+Start with Firebase 
+==================================================================
++---------------------------------------+
+Install Firebase CLI
+
+Step 1 : npm install -g firebase-tools
++---------------------------------------+
+Login to Firebase
+
+Step 2 : firebase login
++---------------------------------------+
+Initialize Firebase in Your Project:
+
+Step 3 : firebase init
++---------------------------------------+
+Deploy Your Application:
+
+Step 4 : firebase deploy
++---------------------------------------+
+======================================
+Components and Section
+=====================================
+
++--------------------------------------------------------+
+| Navbar                                                 |
++--------------------------------------------------------+
+| LandingPG                                              |
++--------------------------------------------------------+
+| FooterList                                                  |
++--------------------------------------------------------+
+| Footer                                                 |
++--------------------------------------------------------+
+
+/src
+├── Admin
+│   └── Admin.jsx
+├── assets
+│   └── imag.png
+├── Footerlist
+│   ├── AboutUs.jsx
+│   ├── Careers.jsx
+│   ├── Community.jsx
+│   ├── EventPlan.jsx
+│   ├── Feature.css
+│   ├── Feature.jsx
+│   ├── footerDec.jsx
+│   ├── ForBusiness.jsx
+│   ├── HelpVideo.jsx
+│   ├── Privacy.jsx
+│   └── ReleaseNote.jsx
+├── Policys
+│   ├── policy.css
+│   └── Policy.jsx
+├── Redistration
+│   ├── Registration.jsx
+│   └── Verification.jsx
+├── App.css
+├── FirebaseConfig.jsx
+├── Footer.jsx
+├── FooterList.jsx
+├── Home.jsx
+└── Nav.jsx
+
+============================================================
+Getting Started with React
+============================================================
++----------------------------------------------------------+
+|                    Install Node Modules                  |
+|                                                          |
+|  - Install All Dependencies:                             |
+|    - If `package.json` exists:                           |
+|      ```bash                                             |
+|      npm install                                         |
+|      ```                                                 |
++----------------------------------------------------------+
+
++--------------------------------------------------------+
+| 1.1 Install Node.js and npm                            |
+|    ↓                                                   |
+|    Download and install from https://nodejs.org/       |
+|    ↓                                                   |
+|    Verify installation with:                           |
+|    npm -v                                              |
+|    node -v                                             |
+|                                                        |
+| 1.2 Install Create React App                           |
+|    ↓                                                   |
+|    Run:                                                |
+|    npx create-react-app my-app                         |
+|    ↓                                                   |
+|    Navigate to project directory:                      |
+|    cd my-app                                           |
++--------------------------------------------------------+
+
+==========================================================
+Developing Your React Application
+==========================================================
+
++--------------------------------------------------------+
+| 2.1 Start the Development Server                       |
+|    ↓                                                   |
+|    Run:                                                |
+|    npm start                                           |
+|    ↓                                                   |
+|    Open http://localhost:3000 to view your app         |
+|                                                        |
+| 2.2 Create Components                                  |
+|    ↓                                                   |
+|    Create component files in src/components            |
+|    ↓                                                   |
+|    Import and use components in App.js                 |
+|                                                        |
+| 2.3 Install and Use Additional Libraries               |
+|    ↓                                                   |
+|    Run:                                                |
+|    npm install <library-name>                          |
+|    ↓                                                   |
+|    Import and use libraries in your components         |
++--------------------------------------------------------+
+
+==========================================================
+Building and Deploying
+==========================================================
+
++--------------------------------------------------------+
+| 3.1 Build Your React Application                       |
+|    ↓                                                   |
+|    Run:                                                |
+|    npm run build                                       |
+|    ↓                                                   |
+|    This creates a build directory with optimized       |
+|    production files                                    |
+|                                                        |
+| 3.2 Install Firebase CLI                               |
+|    ↓                                                   |
+|    Run:                                                |
+|    npm install -g firebase-tools                       |
+|    ↓                                                   |
+|    Log in to Firebase:                                 |
+|    firebase login                                      |
++--------------------------------------------------------+
+
+==========================================================
+Firebase Deployment
+==========================================================
+
++--------------------------------------------------------+
+| 4.1 Initialize Firebase in Your Project                |
+|    ↓                                                   |
+|    Run:                                                |
+|    firebase init                                       |
+|    ↓                                                   |
+|    - Select "Hosting"                                  |
+|    - Choose your project                               |
+|    - Set "public" as the build directory               |
+|    - Configure as a single-page app (yes)              |
+|                                                        |
+| 4.2 Deploy Your Application                            |
+|    ↓                                                   |
+|    Run:                                                |
+|    firebase deploy                                     |
+|    ↓                                                   |
+|    Your app is now live at your Firebase Hosting URL   |
++--------------------------------------------------------+
