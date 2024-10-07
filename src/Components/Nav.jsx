@@ -304,7 +304,7 @@ export default function MyNavBar() {
     toolbar: [
       [{ 'header': '1' }, { 'header': '2' }, { 'header': '3' }],
       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      ['bold', 'italic', 'underline'],
+      ['bold', 'italic', 'underline','strike'],
       [{ 'lineheight': ['1', '1.5', '2', '2.5', '3'] }],
       ['link'],
       [{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' }, { 'align': 'justify' }],
@@ -317,7 +317,7 @@ export default function MyNavBar() {
   const formats = [
     'header', 'font',
     'list', 'bullet',
-    'bold', 'italic', 'underline',
+    'bold', 'italic', 'underline','strike',
     'link',
     'align',
     'color', 'background'

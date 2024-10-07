@@ -330,3 +330,12 @@
 .Registration-para  p{
   margin-bottom: 0 ;
 }
+.modal-half-screen {
+  max-width: 60%; /* Set the maximum width to 50% of the screen */
+}
+.ql-toolbar> .ql-formats:nth-child(4){
+  display: none;
+}
+.ql-toolbar .ql-header[value="3"] {
+  display: none;
+}

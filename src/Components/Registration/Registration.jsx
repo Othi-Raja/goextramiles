@@ -129,7 +129,7 @@ export default function Registration() {
         toolbar: [
             [{ 'header': '1' }, { 'header': '2' }, { 'header': '3' }],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-            ['bold', 'italic', 'underline'],
+            ['bold', 'italic', 'underline','strike'],
             [{ 'lineheight': ['1', '1.5', '2', '2.5', '3'] }],
             ['link'],
             [{ 'align': '' }, { 'align': 'center' }, { 'align': 'right' }, { 'align': 'justify' }],
@@ -140,7 +140,7 @@ export default function Registration() {
     const formats = [
         'header', 'font',
         'list', 'bullet',
-        'bold', 'italic', 'underline',
+        'bold', 'italic', 'underline','strike',
         'link',
         'align',
         'color', 'background'
@@ -194,11 +194,11 @@ export default function Registration() {
                         </div>
                     )}
                 </Row>
-                <Container className='mb-5'>
-                    <Row className="mt-3 w-100">
+                <>
+                    <Row className="mt-3 w-100 mb-5">
                         <div className='w-100 h-auto d-flex justify-content-center align-items-start flex-wrap'>
                             {Regdata.cards && Regdata.cards.map((card, index) => (
-                                <div key={index} className="card m-2 border-0 Registration-card-style  mt-3" style={{ width: '18rem', height: 'auto' }}>
+                                <div key={index} className="card m-2 border-0 Registration-card-style  mt-3" style={{ width: '25rem', height: 'auto' }}>
                                     <div className='text-center'>
                                         <img src={card.logo} className="card-img-top pt-2" alt="Logo" style={{ width: '100px' }} />
                                     </div>
@@ -242,7 +242,7 @@ export default function Registration() {
                             )}
                         </div>
                     </Row>
-                </Container>
+                </>
                 {/* <h1>Device Type: {deviceType}</h1> */}
             </Container>
             {/* Modal for editing banner image */}
@@ -273,7 +273,7 @@ export default function Registration() {
                 </Modal.Footer>
             </Modal>
             {/* Modal for editing card data */}
-            <Modal show={showCardModal} onHide={handleCardModalClose}>
+            <Modal show={showCardModal} onHide={handleCardModalClose} className='modal-lg'>
                 <Modal.Header closeButton>
                     <Modal.Title className='text-black-50'>Edit Card</Modal.Title>
                 </Modal.Header>
