@@ -24,7 +24,7 @@ export default function Features() {
     };
     // Fetch data from Firestore
     const fetchData = async () => {
-        const docRef = doc(firestoreDb, 'Features', 'FeaturesData');
+        const docRef = doc(firestoreDb, 'wfeatures', 'FeaturesData');
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             setFeatureData(docSnap.data());

@@ -22,7 +22,7 @@ export default function AboutUs() {
   };
   // Fetch data from Firestore
   const fetchData = async () => {
-    const docRef = doc(firestoreDb, 'About', 'aboutus');
+    const docRef = doc(firestoreDb, 'wabout', 'aboutus');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const data = docSnap.data();

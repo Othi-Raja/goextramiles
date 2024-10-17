@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 //fetching  footer data from firestore
 const fetchfooterContent = async () => {
     try {
-        const footerCollection = collection(firestoreDb, 'FooterItems'); // Reference to the Firestore collection
+        const footerCollection = collection(firestoreDb, 'wfooter'); // Reference to the Firestore collection
         const footerSnapshot = await getDocs(footerCollection); // Fetch all documents from the collection
         const footerList = footerSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); // Map the documents to their data
         return footerList; // Return the fetched data

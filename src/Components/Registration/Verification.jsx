@@ -17,7 +17,7 @@ export default function Verification() {
   const [VerifyToRegdata, setVerifyToRegData] = useState({});
   // Fetch data from Firestore
   const fetchData = async () => {
-    const docRef = doc(firestoreDb, 'VerifyToRegistor', 'verifytoregistor');
+    const docRef = doc(firestoreDb, 'wverifytoregistor', 'verifytoregistor');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setVerifyToRegData(docSnap.data());

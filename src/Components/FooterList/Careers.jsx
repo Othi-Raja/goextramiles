@@ -21,7 +21,7 @@ export default function Careers() {
   const navigate = useNavigate();
   // Fetch data from Firestore
   const fetchData = async () => {
-    const docRef = doc(firestoreDb, 'Careers', 'CareersPage');
+    const docRef = doc(firestoreDb, 'wcareers', 'CareersPage');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const data = docSnap.data();
@@ -47,7 +47,7 @@ export default function Careers() {
   };
   // Function to save changes
   const handleSaveChanges = async () => {
-    const docRef = doc(firestoreDb, 'Careers', 'CareersPage');
+    const docRef = doc(firestoreDb, 'wcareers', 'CareersPage');
     await updateDoc(docRef, {
       Title: careerTitle,
       CareerPara: careerPara,

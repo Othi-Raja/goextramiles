@@ -18,7 +18,7 @@ export default function Privacy() {
   const navigate = useNavigate();
   // Fetch data from Firestore
   const fetchData = async () => {
-    const docRef = doc(firestoreDb, 'Privacy', 'PrivacyPg');
+    const docRef = doc(firestoreDb, 'wprivacy', 'PrivacyPg');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const data = docSnap.data();
@@ -39,7 +39,7 @@ export default function Privacy() {
   };
   // Function to save changes
   const handleSaveChanges = async () => {
-    const docRef = doc(firestoreDb, 'Privacy', 'PrivacyPg');
+    const docRef = doc(firestoreDb, 'wprivacy', 'PrivacyPg');
     await updateDoc(docRef, {
       PvtTitle: PvtTitle,
       pvtPara: pvtPara,

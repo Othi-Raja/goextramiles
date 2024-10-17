@@ -20,7 +20,7 @@ export default function ReleaseNotes() {
   const navigate = useNavigate();
   // Fetch data from Firestore
   const fetchData = async () => {
-    const docRef = doc(firestoreDb, 'ReleaseNotes', 'ReleaseNotesData');
+    const docRef = doc(firestoreDb, 'wreleasenotes', 'ReleaseNotesData');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const data = docSnap.data();
@@ -53,7 +53,7 @@ export default function ReleaseNotes() {
         NotesContent: currentNote.NotesContent,
       });
     }
-    const docRef = doc(firestoreDb, 'ReleaseNotes', 'ReleaseNotesData');
+    const docRef = doc(firestoreDb, 'wreleasenotes', 'ReleaseNotesData');
     await updateDoc(docRef, {
       releaseNotes: updatedNotes,
     });

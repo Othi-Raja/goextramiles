@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "goextramile",
     "public": "build",
     "ignore": [
       "firebase.json",

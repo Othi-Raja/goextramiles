@@ -15,7 +15,7 @@ import 'react-quill/dist/quill.core.css';
 const fetchTncItems = async () => {
   
   try {
-    const TncCollection = collection(firestoreDb, 'Policy');
+    const TncCollection = collection(firestoreDb, 'wpolicy');
     const TncSnapshot = await getDocs(TncCollection);
     const TncList = TncSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     console.log(TncList);

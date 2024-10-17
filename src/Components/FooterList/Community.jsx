@@ -22,7 +22,7 @@ export default function Community() {
   const navigate = useNavigate();
   // Fetch data from Firestore
   const fetchData = async () => {
-    const docRef = doc(firestoreDb, 'Community', 'CommunityPg');
+    const docRef = doc(firestoreDb, 'wcommunity', 'CommunityPg');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       const data = docSnap.data();
@@ -44,7 +44,7 @@ export default function Community() {
   };
   // Function to save changes
   const handleSaveChanges = async () => {
-    const docRef = doc(firestoreDb, 'Community', 'CommunityPg');
+    const docRef = doc(firestoreDb, 'wcommunity', 'CommunityPg');
     await updateDoc(docRef, {
       Title: Title,
       Cpara: Cpara,

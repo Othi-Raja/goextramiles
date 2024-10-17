@@ -31,7 +31,7 @@ export default function Registration() {
     });
     const navigate = useNavigate();
     const fetchData = async () => {
-        const docRef = doc(firestoreDb, 'EPlans', 'Plans');
+        const docRef = doc(firestoreDb, 'wevents', 'Plans');
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             const data = docSnap.data();
@@ -56,7 +56,7 @@ export default function Registration() {
     };
     const handleModalClose = () => setShowModal(false);
     const saveBannerImage = async () => {
-        const docRef = doc(firestoreDb, 'EPlans', 'Plans');
+        const docRef = doc(firestoreDb, 'wevents', 'Plans');
         try {
             await updateDoc(docRef, { bannerImg: newBannerImg });
             setRegData((prevData) => ({ ...prevData, bannerImg: newBannerImg }));
@@ -91,7 +91,7 @@ export default function Registration() {
         } else {
             updatedCards.push(newCardData); // Add new card
         }
-        const docRef = doc(firestoreDb, 'EPlans', 'Plans');
+        const docRef = doc(firestoreDb, 'wevents', 'Plans');
         try {
             await updateDoc(docRef, { cards: updatedCards });
             setRegData((prevData) => ({ ...prevData, cards: updatedCards }));

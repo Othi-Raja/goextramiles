@@ -15,7 +15,7 @@ function App() {
   const [loading, setLoading] = useState(true); // Add loading state
   // Fetch data from Firestore
   const fetchData = async () => {
-    const docRef = doc(firestoreDb, 'Home', 'HomePageData');
+    const docRef = doc(firestoreDb, 'whome', 'HomePageData');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setHomeData(docSnap.data());

@@ -17,7 +17,7 @@ export default function ForBusiness() {
   const navigate = useNavigate();
   // Fetch data from Firestore
   const fetchData = async () => {
-    const docRef = doc(firestoreDb, 'ForBussines', 'forbussiness');
+    const docRef = doc(firestoreDb, 'wbusiness', 'forbusiness');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setBusinesData(docSnap.data());
@@ -35,7 +35,7 @@ export default function ForBusiness() {
   };
   const handleSaveChanges = async () => {
     try {
-      const docRef = doc(firestoreDb, 'ForBussines', 'forbussiness');
+      const docRef = doc(firestoreDb, 'wbusiness', 'forbusiness');
       await setDoc(docRef, formData);
       setBusinesData(formData);
       setShowModal(false);

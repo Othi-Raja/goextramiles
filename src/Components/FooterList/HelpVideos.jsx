@@ -24,7 +24,7 @@ export default function HelpVideos() {
   // Fetch data from Firestore
   const fetchData = async () => {
     setLoading(true);
-    const querySnapshot = await getDocs(collection(firestoreDb, 'HelpdeskVedio'));
+    const querySnapshot = await getDocs(collection(firestoreDb, 'whelpdeskvideo'));
     const videos = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     setHomeData(videos);
     setLoading(false);

@@ -22,7 +22,7 @@ import { Link } from 'react-router-dom';
 // fetch Footer data
 const fetchfooterContent = async () => {
   try {
-    const footerCollection = collection(firestoreDb, 'FooterItems'); // Reference to the Firestore collection
+    const footerCollection = collection(firestoreDb, 'wfooter'); // Reference to the Firestore collection
     const footerSnapshot = await getDocs(footerCollection); // Fetch all documents from the collection
     const footerList = footerSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })); // Map the documents to their data
     return footerList; // Return the fetched data
@@ -33,7 +33,7 @@ const fetchfooterContent = async () => {
 };
 const updatefooterItem = async (id, updatedItem) => {
   try {
-    const itemDoc = doc(firestoreDb, 'FooterItems', id); // Corrected the collection name to 'About'
+    const itemDoc = doc(firestoreDb, 'wfooter', id); // Corrected the collection name to 'About'
     await updateDoc(itemDoc, updatedItem);
     // console.log('Document updated with ID: ', id);
   } catch (e) {
@@ -43,7 +43,7 @@ const updatefooterItem = async (id, updatedItem) => {
 // Fetching Terms and con data
 const fetchTncItems = async () => {
   try {
-    const TncCollection = collection(firestoreDb, 'Policy');
+    const TncCollection = collection(firestoreDb, 'wpolicy');
     const TncSnapshot = await getDocs(TncCollection);
     const TncList = TncSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     return TncList;
@@ -81,7 +81,7 @@ export default function MyNavBar() {
   });
   // Fetch data from Firestore
   const fetchfooterlistData = async () => {
-    const docRef = doc(firestoreDb, 'Home', 'HomePageData');
+    const docRef = doc(firestoreDb, 'whome', 'HomePageData');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setFooterListData(docSnap.data());
@@ -104,7 +104,7 @@ export default function MyNavBar() {
   };
   // Fetch data from Firestore
   const fetchData = async () => {
-    const docRef = doc(firestoreDb, 'Home', 'HomePageData');
+    const docRef = doc(firestoreDb, 'whome', 'HomePageData');
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setHomeData(docSnap.data());
@@ -258,7 +258,7 @@ export default function MyNavBar() {
       console.error("Failed to update Firestore:", error);
     }
     try {
-      const docRef = doc(firestoreDb, 'Policy', currentTNCItemId);
+      const docRef = doc(firestoreDb, 'wpolicy', currentTNCItemId);
       await updateDoc(docRef, { PolicyContent: editTncContent });
       setShowModal(false);
       // Optionally, refetch items to reflect changes immediately
@@ -269,7 +269,7 @@ export default function MyNavBar() {
     }
     try {
       // Home data updates
-      const docRef = doc(firestoreDb, 'Home', 'HomePageData');
+      const docRef = doc(firestoreDb, 'whome', 'HomePageData');
       // Filter out undefined values for Home data
       const updateData = {};
       if (editableHomeData.Txt1 !== undefined) updateData.Txt1 = editableHomeData.Txt1;

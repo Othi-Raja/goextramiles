@@ -56,7 +56,7 @@ const Admin = () => {
   useEffect(() => {
     const fetchAdminEmails = async () => {
       try {
-        const docRef = doc(firestoreDb, "Admin", "onlyadmin");
+        const docRef = doc(firestoreDb, "wadmin", "onlyadmin");
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const adminList = docSnap.data().AdminList;
